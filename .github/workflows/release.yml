@@ -1,10 +1,11 @@
 name: Release somgr on GitHub
 
 on:
-  workflow_dispatch:
+  push:
 
 jobs:
-  upload-artifacts:
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -20,9 +21,18 @@ jobs:
       - name: Build
         run: cargo build --release
 
-      - name: Release
-        uses: fnkr/github-action-ghr@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        env:
-          GHR_PATH: target/release/somgr
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@v4
+        with:
+        name: somgr
+        path: |
+          target/release/somgr
+
+      - uses: softprops/action-gh-release@v2
+        if: github.repository == 'Strawberry-Foundations/somgr' && github.ref == 'refs/heads/main'
+        with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          tag_name: "continuous"
+          prerelease: true
+          name: "Continuous Build"
+          files: |
+            target/release/somgr
