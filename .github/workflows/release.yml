@@ -31,7 +31,7 @@ jobs:
         with:
           token: "${{ secrets.GITHUB_TOKEN }}"
           tag_name: "continuous"
-          prerelease: true
+          prerelease: false
           name: "Continuous Build"
           files: |
             target/release/somgr
