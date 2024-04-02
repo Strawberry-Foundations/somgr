@@ -28,7 +28,6 @@ jobs:
             target/release/somgr
 
       - uses: softprops/action-gh-release@v2
-        if: github.repository == 'Strawberry-Foundations/somgr' && github.ref == 'refs/heads/main'
         with:
           token: "${{ secrets.GITHUB_TOKEN }}"
           tag_name: "continuous"
