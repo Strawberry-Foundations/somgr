@@ -20,8 +20,9 @@ jobs:
       - name: Build
         run: cargo build --release
 
-      - uses: softprops/action-gh-release@v1
-        with:
-          token: "${{ secrets.GITHUB_TOKEN }}"
-          files: |
-            target/release/somgr
+      - name: Release
+        uses: fnkr/github-action-ghr@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GHR_PATH: target/release/somgr
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
