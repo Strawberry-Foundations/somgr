@@ -1,37 +1,45 @@
-name: Release somgr on GitHub
-
 on:
+  release:
+    types: [created]
   push:
 
+
 jobs:
-  build:
-    name: Build
+  release:
+    name: release ${{ matrix.target }} (with non-required env)
     runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: x86_64-unknown-linux-gnu
+            archive: tar.gz
     steps:
-      - uses: actions/checkout@v3
-      - name: Setup Rust
-        uses: ATiltedTree/setup-rust@v1
+      - uses: actions/checkout@master
+      - name: Compile and release
+        uses: rust-build/rust-build.action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          rust-version: stable
-          components: clippy
-
-      - name: Install dependencies
-        run: sudo apt install libdbus-1-dev pkg-config
-          
-      - name: Build
-        run: cargo build --release
-
-      - uses: actions/upload-artifact@v4
+          RUSTTARGET: ${{ matrix.target }}
+          EXTRA_FILES: "README.md"
+          SRC_DIR: "."
+          ARCHIVE_TYPES: ${{ matrix.archive }}
+          MINIFY: "yes"
+  release_without_not_required:
+    name: release ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        target: [x86_64-unknown-linux-gnu]
+    steps:
+      - uses: actions/checkout@master
+      - name: Compile and release
+        uses: rust-build/rust-build.action@master
         with:
-          name: somgr
-          path: |
-            target/release/somgr
-
-      - uses: softprops/action-gh-release@v2
-        with:
-          token: "${{ secrets.GITHUB_TOKEN }}"
-          tag_name: "continuous"
-          prerelease: false
-          name: "Continuous Build"
-          files: |
-            target/release/somgr
+          RUSTTARGET: ${{ matrix.target }}
+          UPLOAD_MODE: none
+      - name: Checkout output
+        run: ls -laR
