@@ -3,9 +3,9 @@ use lazy_static::lazy_static;
 use stblib::logging::Logger;
 use stblib::colors::{BLUE, BOLD, C_RESET, CYAN, GREEN, RED, YELLOW};
 
-pub const VERSION: &str = "1.0";
-
 lazy_static! {
+    pub static ref VERSION: String = env!("CARGO_PKG_VERSION").to_string();
+
     pub static ref LOGGER: Logger = Logger::new(
         stblib::logging::featureset::FeatureSet::new(),
         stblib::logging::formats::LogFormat {
