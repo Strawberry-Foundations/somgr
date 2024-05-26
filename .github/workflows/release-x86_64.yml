@@ -1,4 +1,4 @@
-name: Release Rust Binary (x86_64)
+name: Release Rust Binary
 
 on:
   workflow_dispatch:
@@ -26,20 +26,20 @@ jobs:
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
-
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         with:
           tag_name: latest
           release_name: Latest Release
           draft: false
           prerelease: false
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
       - name: Upload release asset
         uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: target/release/somgr
-
-          asset_name: somgr-x86_64
+          asset_name: somgr
           asset_content_type: application/octet-stream
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
