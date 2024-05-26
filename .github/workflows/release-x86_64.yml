@@ -1,4 +1,4 @@
-name: Release Rust Binary
+name: Release Rust Binary (x86_64)
 
 on:
   workflow_dispatch:
@@ -41,5 +41,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: target/release/somgr
-          asset_name: somgr
+          asset_name: somgr-x86_64
           asset_content_type: application/octet-stream
