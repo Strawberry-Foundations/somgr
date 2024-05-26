@@ -10,6 +10,8 @@ pub fn help() {
     {CYAN}{BOLD}about:{C_RESET} About StrawberryOS Manager (somgr)
     {CYAN}{BOLD}shell:{C_RESET} chroot into your base partition
     {CYAN}{BOLD}update:{C_RESET} Updates the system partition
+    {CYAN}{BOLD}lock:{C_RESET} Lock apt package update for userspace
+    {CYAN}{BOLD}unlock:{C_RESET} Unlock apt package update for userspace
     {CYAN}{BOLD}remount:{C_RESET} Remount your base partition and make it writeable
 
 ", *VERSION);
