@@ -3,15 +3,16 @@ use crate::statics::VERSION;
 
 pub fn help() {
     println!("\
-{BOLD}{CYAN}{UNDERLINE}StrawberryOS Manager (somgr) v{VERSION}{C_RESET}\n\
+{BOLD}{CYAN}{UNDERLINE}StrawberryOS Manager (somgr) v{}{C_RESET}\n\
 {GREEN}{BOLD}Usage:{RESET} {WHITE}somgr {CYAN}[command] {RED}[<options>]{C_RESET}\n\n\
 {MAGENTA}{BOLD}Commands:{C_RESET}
     {CYAN}{BOLD}help:{C_RESET} Prints this message
     {CYAN}{BOLD}about:{C_RESET} About StrawberryOS Manager (somgr)
     {CYAN}{BOLD}shell:{C_RESET} chroot into your base partition
+    {CYAN}{BOLD}update:{C_RESET} Updates the system partition
     {CYAN}{BOLD}remount:{C_RESET} Remount your base partition and make it writeable
 
-");
+", *VERSION);
     std::process::exit(0);
 }
 
