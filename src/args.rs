@@ -11,6 +11,7 @@ pub enum Command {
     Shell,
     About,
     Remount,
+    Update,
     None
 }
 
@@ -70,6 +71,7 @@ impl Args {
         match args.command_str.as_str() {
             "shell" => args.command = Command::Shell,
             "remount" => args.command = Command::Remount,
+            "update" => args.command = Command::Update,
             "about" => args.command = Command::About,
             _ => args.command = Command::None,
         }
