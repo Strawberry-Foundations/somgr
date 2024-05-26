@@ -12,6 +12,8 @@ pub enum Command {
     About,
     Remount,
     Update,
+    Lock,
+    Unlock,
     None
 }
 
@@ -72,6 +74,8 @@ impl Args {
             "shell" => args.command = Command::Shell,
             "remount" => args.command = Command::Remount,
             "update" => args.command = Command::Update,
+            "lock" => args.command = Command::Lock,
+            "unlock" => args.command = Command::Unlock,
             "about" => args.command = Command::About,
             _ => args.command = Command::None,
         }
