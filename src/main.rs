@@ -10,6 +10,8 @@ fn main() -> eyre::Result<()> {
         Command::Shell => commands::shell::shell(),
         Command::Remount => commands::remount::remount(),
         Command::Update => commands::update::update(),
+        Command::Lock => commands::lock::lock(),
+        Command::Unlock => commands::unlock::unlock(),
         Command::About => commands::about::about(),
         Command::None => commands::help::help(),
     }
