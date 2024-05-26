@@ -19,7 +19,7 @@ jobs:
           override: true
 
       - name: Install dependencies
-        run: sudo apt-get install pkg-config libssl-dev binutils libc6-aarch64 libc6-arm64-cross libstdc++-10-dev libstdc++-10-dev-arm64-cross build-essential
+        run: sudo apt-get install pkg-config libssl-dev binutils libc6-arm64-cross libstdc++-10-dev-arm64-cross build-essential
 
       - name: Build the binary
         run: cargo build --release --target aarch64-unknown-linux-gnu
