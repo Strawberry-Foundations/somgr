@@ -19,7 +19,7 @@ jobs:
           override: true
 
       - name: Add ports repo
-        run: echo deb http://ports.ubuntu.com/dists/jammy jammy main | sudo tee -a /etc/apt/sources.list  
+        run: echo deb http://ports.ubuntu.com/ubuntu-ports jammy main | sudo tee -a /etc/apt/sources.list  
 
       - name: Install dependencies
         run:  sudo apt-get update && sudo apt-get install pkg-config libssl-dev libssl-dev:arm64 binutils gcc-aarch64-linux-gnu libc6-arm64-cross libstdc++-10-dev-arm64-cross build-essential
