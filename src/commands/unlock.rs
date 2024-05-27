@@ -1,26 +1,12 @@
-use std::fs::File;
-use std::io::BufRead;
-
 use subprocess::NullFile;
 use stblib::colors::{BOLD, C_RESET, GREEN, RESET};
 
+use crate::util::dpkg;
+
 pub fn unlock() {
     println!("{BOLD}{GREEN}=>{RESET} Unlocking apt (DANGEROUS!) ...{C_RESET}");
-    subprocess::Exec::shell(
-        "/usr/sbin/chroot / dpkg --get-selections | grep -v deinstall | awk '{print $1}' > /var/cache/apt/package_list.txt"
-    ).popen().unwrap();
 
-    let file = File::open("/var/cache/apt/package_list.txt").unwrap();
-    let reader = std::io::BufReader::new(file);
-
-    let mut packages = Vec::new();
-
-    for line in reader.lines() {
-        let line = line.unwrap();
-        for word in line.split_whitespace() {
-            packages.push(word.to_string());
-        }
-    }
+    let packages = dpkg::get_packages();
 
     let exit_status = subprocess::Exec::shell(format!("apt-mark unhold {} &> /dev/null", packages.join(" ")))
         .stdout(NullFile)
