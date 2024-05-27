@@ -7,13 +7,12 @@ pub fn help() {
 {GREEN}{BOLD}Usage:{RESET} {WHITE}somgr {CYAN}[command] {RED}[<options>]{C_RESET}\n\n\
 {MAGENTA}{BOLD}Commands:{C_RESET}
     {CYAN}{BOLD}help:{C_RESET} Prints this message
-    {CYAN}{BOLD}about:{C_RESET} About StrawberryOS Manager (somgr)
-    {CYAN}{BOLD}shell:{C_RESET} chroot into your base partition
+    {CYAN}{BOLD}about:{C_RESET} About StrawberryOS Manager
+    {CYAN}{BOLD}shell:{C_RESET} Opens a new system shell 
     {CYAN}{BOLD}update:{C_RESET} Updates the system partition
     {CYAN}{BOLD}lock:{C_RESET} Lock apt package update for userspace
     {CYAN}{BOLD}unlock:{C_RESET} Unlock apt package update for userspace
-    {CYAN}{BOLD}remount:{C_RESET} Remount your base partition and make it writeable
-
+    {CYAN}{BOLD}remount:{C_RESET} Remount your system partition and make it writeable
 ", *VERSION);
     std::process::exit(0);
 }
