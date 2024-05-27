@@ -17,6 +17,6 @@ pub fn get_packages() -> Vec<String> {
             packages.push(word.to_string());
         }
     }
-    
+
     packages
 }
