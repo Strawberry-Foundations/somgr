@@ -1,18 +1,15 @@
 use crate::log_info;
+use crate::util::fs;
 
 pub fn shell() {
     log_info!("Mounting file systems ...");
-    subprocess::Exec::shell("sh -c 'mount --bind /dev /system/dev'").popen().unwrap();
-    subprocess::Exec::shell("sh -c 'mount --bind /sys /system/sys'").popen().unwrap();
-    subprocess::Exec::shell("sh -c 'mount --bind /proc /system/proc'").popen().unwrap();
+    fs::mount_system();
     
     log_info!("Entering chroot ...");
     subprocess::Exec::shell("sh -c '/usr/sbin/chroot /system'").popen().unwrap();
 
     log_info!("Unmounting file systems ...");
-    subprocess::Exec::shell("sh -c 'umount /system/dev'").popen().unwrap();
-    subprocess::Exec::shell("sh -c 'umount /system/sys'").popen().unwrap();
-    subprocess::Exec::shell("sh -c 'umount /system/proc'").popen().unwrap();
+    fs::umount_system();
     
     log_info!("Leaving chroot ...");
 }
