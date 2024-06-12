@@ -1,4 +1,4 @@
 pub mod permissions;
 pub mod dpkg;
-mod log;
-mod fs;
+pub mod log;
+pub mod fs;
