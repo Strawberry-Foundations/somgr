@@ -12,6 +12,8 @@ pub fn help() {
     {CYAN}{BOLD}update:{C_RESET} Updates the system partition
     {CYAN}{BOLD}lock:{C_RESET} Lock apt package update for userspace
     {CYAN}{BOLD}unlock:{C_RESET} Unlock apt package update for userspace
+    {CYAN}{BOLD}mount:{C_RESET} Bind /dev, /sys & /proc to your system partition
+    {CYAN}{BOLD}umount:{C_RESET} Unmount bindings in /system
     {CYAN}{BOLD}remount:{C_RESET} Remount your system partition and make it writeable
 ", *VERSION);
     std::process::exit(0);
