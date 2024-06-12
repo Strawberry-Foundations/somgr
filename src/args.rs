@@ -10,6 +10,8 @@ lazy_static!(
 pub enum Command {
     Shell,
     About,
+    Mount,
+    Umount,
     Remount,
     Update,
     Lock,
@@ -72,6 +74,8 @@ impl Args {
 
         match args.command_str.as_str() {
             "shell" => args.command = Command::Shell,
+            "mount" => args.command = Command::Mount,
+            "umount" => args.command = Command::Umount,
             "remount" => args.command = Command::Remount,
             "update" => args.command = Command::Update,
             "lock" => args.command = Command::Lock,
