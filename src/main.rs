@@ -8,6 +8,8 @@ pub mod util;
 fn main() -> eyre::Result<()> {
     match ARGS.command {
         Command::Shell => commands::shell::shell(),
+        Command::Mount => commands::mount::mount(),
+        Command::Umount => commands::mount::umount(),
         Command::Remount => commands::mount::remount(),
         Command::Update => commands::update::update(),
         Command::Lock => commands::lock::lock(),
