@@ -1,13 +1,17 @@
-use stblib::colors::{BOLD, C_RESET, GREEN, RESET};
+use crate::log_info;
+use crate::util::fs::{mount_system, umount_system};
 
 pub fn remount() {
-    println!("{BOLD}{GREEN}=>{RESET} Remounting /system in rw mode...{C_RESET}");
+    log_info!("Remounting /system in rw mode...");
     subprocess::Exec::shell("mount -o remount,rw /system").popen().unwrap();
 }
 
 pub fn mount() {
-    println!("{BOLD}{GREEN}=>{RESET} Binding /dev, /sys and /proc to /system ...{C_RESET}");
-    subprocess::Exec::shell("mount -o remount,rw /system").popen().unwrap();
+    log_info!("Binding /dev, /sys and /proc to /system ...");
+    mount_system()
 }
 
-
+pub fn umount() {
+    log_info!("Unmounting system bindings in /system ...");
+    umount_system()
+}
