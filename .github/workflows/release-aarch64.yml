@@ -18,11 +18,17 @@ jobs:
           target: aarch64-unknown-linux-gnu
           override: true
 
+      - name: Add ports repo
+        run: echo deb http://ports.ubuntu.com/ubuntu-ports jammy main | sudo tee -a /etc/apt/sources.list  
+
       - name: Install dependencies
-        run: echo deb http://ports.ubuntu.com/dists/jammy/ arm64 main | sudo tee -a /etc/apt/sources.list && sudo apt update && sudo apt-get install pkg-config libssl-dev:arm64 binutils gcc-aarch64-linux-gnu libc6-arm64-cross libstdc++-10-dev-arm64-cross build-essential
+        run:  sudo apt-get update && sudo apt-get install pkg-config libssl-dev libssl-dev:arm64 binutils gcc-aarch64-linux-gnu libc6-arm64-cross libstdc++-10-dev-arm64-cross build-essential
+
+      - name: Configure project for aarch64
+        run: echo '[target.aarch64-unknown-linux-gnu]' >> ~/.cargo/config && echo 'linker = "aarch64-linux-gnu-gcc"' >> ~/.cargo/config
 
       - name: Build the binary
-        run: cargo build --release --target aarch64-unknown-linux-gnu
+        run: cargo build --target aarch64-unknown-linux-gnu
 
       - name: Create release
         id: create_release
