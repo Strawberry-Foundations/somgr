@@ -1,4 +1,3 @@
-use stblib::colors::{BOLD, C_RESET, GREEN, RESET};
 use crate::commands::lock::lock;
 use crate::commands::mount::{mount, umount};
 use crate::log_info;
