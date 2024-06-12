@@ -1,12 +1,16 @@
 use stblib::colors::{BOLD, C_RESET, GREEN, RESET};
 use crate::commands::lock::lock;
+use crate::commands::mount::{mount, umount};
+use crate::log_info;
 
 pub fn update() {
-    println!("{BOLD}{GREEN}=>{RESET} Starting os update ...{C_RESET}");
+    log_info!("Starting os update ...");
+    
+    mount();
     subprocess::Exec::shell("/usr/sbin/chroot / apt update && apt -q upgrade").popen().unwrap();
 
     lock();
+    umount();
     
-    println!("{BOLD}{GREEN}=>{RESET} Finished os update ...{C_RESET}");
-
+    log_info!("Finished os update ...");
 }
