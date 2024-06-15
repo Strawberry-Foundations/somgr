@@ -17,6 +17,7 @@ pub fn help() {
     {CYAN}{BOLD}update:{C_RESET} Updates the system partition
     {BOLD}↳ {MAGENTA}Options:{C_RESET}
         {CYAN}{BOLD}-y, --yes{C_RESET}  Automatically accept package updates 
+
     {CYAN}{BOLD}remount:{C_RESET} Remount your system partition in a specific mode
     {BOLD}↳ {MAGENTA}Options:{C_RESET}
         {CYAN}{BOLD}-ro, --readonly{C_RESET}  Remount in readonly (ro) mode     {GREEN}{BOLD}[default]{C_RESET}
