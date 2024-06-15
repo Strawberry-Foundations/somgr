@@ -1,4 +1,4 @@
-use crate::args::{ARGS, Command};
+use crate::args::{ARGS, Command, OPTIONS};
 
 pub mod args;
 pub mod commands;
@@ -10,7 +10,7 @@ fn main() -> eyre::Result<()> {
         Command::Shell => commands::shell::shell(),
         Command::Mount => commands::mount::mount(),
         Command::Umount => commands::mount::umount(),
-        Command::Remount => commands::mount::remount(&ARGS.options.mount_type),
+        Command::Remount => commands::mount::remount(&OPTIONS.mount_type),
         Command::Update => commands::update::update(),
         Command::Lock => commands::lock::lock(),
         Command::Unlock => commands::unlock::unlock(),
