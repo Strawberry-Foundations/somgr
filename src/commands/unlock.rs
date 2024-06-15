@@ -1,10 +1,10 @@
 use subprocess::NullFile;
-use stblib::colors::{BOLD, C_RESET, GREEN, RESET};
 
+use crate::log_info;
 use crate::util::dpkg;
 
 pub fn unlock() {
-    println!("{BOLD}{GREEN}=>{RESET} Unlocking apt (DANGEROUS!) ...{C_RESET}");
+    log_info!("Unlocking apt (DANGEROUS!) ...");
 
     let packages = dpkg::get_packages();
 
@@ -15,7 +15,7 @@ pub fn unlock() {
         .expect("Failed to execute command");
 
     if exit_status.success() {
-        println!("{BOLD}{GREEN}=>{RESET} Finished apt unlocking ...{C_RESET}");
+        log_info!("Finished apt unlocking");
     } else {
         eprintln!("Command execution failed");
     }
