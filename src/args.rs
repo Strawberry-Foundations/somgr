@@ -69,10 +69,8 @@ impl Args {
     pub fn collect_options(&mut self) -> Options {
         let mut options = Options::default();
 
-
-        let mut iter = self.args.clone().into_iter().skip(1);
-
-        while let Some(arg) = iter.next() {
+        let iter = self.args.clone().into_iter().skip(1);
+        for arg in iter {
             match arg.as_str() {
                 /* "-p" | "--port" => {
                     if let Some(val) = iter.next() {
@@ -90,7 +88,7 @@ impl Args {
                 "-rw" | "--readwrite" => options.mount_type = MountType::ReadWrite,
 
                 _ => {
-     
+
                 }
             }
         }
