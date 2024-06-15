@@ -3,6 +3,7 @@ use std::path::Path;
 use crate::commands::lock::lock;
 use crate::commands::mount::{mount, umount, remount, MountType};
 use crate::{log_fail, log_info};
+use crate::args::OPTIONS;
 
 pub fn update() {
     if !Path::new("/user").exists() {
@@ -14,7 +15,14 @@ pub fn update() {
     
     remount(&MountType::ReadWrite);
     mount();
-    subprocess::Exec::shell("/usr/sbin/chroot /system sh -c 'apt update && apt upgrade'").popen().unwrap();
+    
+    if OPTIONS.yes {
+        subprocess::Exec::shell("/usr/sbin/chroot /system sh -c 'apt update && apt -y upgrade'").popen().unwrap();    
+    }
+    else {
+        subprocess::Exec::shell("/usr/sbin/chroot /system sh -c 'apt update && apt upgrade'").popen().unwrap();
+    }
+    
 
     lock();
     remount(&MountType::ReadOnly);
