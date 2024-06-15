@@ -1,6 +1,5 @@
 use std::env;
 use lazy_static::lazy_static;
-use stblib::colors::{BOLD, C_RESET, RED, RESET};
 use crate::commands::mount::MountType;
 
 lazy_static!(
