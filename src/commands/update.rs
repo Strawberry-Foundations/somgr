@@ -4,13 +4,11 @@ use crate::commands::lock::lock;
 use crate::commands::mount::{mount, umount, remount, MountType};
 use crate::{log_fail, log_info};
 use crate::args::OPTIONS;
+use crate::util::verification::os_verifier;
 
 pub fn update() {
-    if !Path::new("/user").exists() {
-        log_fail!("somgr can only be executed on a StrawberryOS system");
-        std::process::exit(1);
-    }
-
+    os_verifier();
+    
     log_info!("Starting os update ...");
 
     remount(&MountType::ReadWrite);
