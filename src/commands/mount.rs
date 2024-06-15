@@ -1,12 +1,14 @@
 use crate::log_info;
 use crate::util::fs::{mount_system, umount_system};
 
+#[derive(Default)]
 pub enum MountType {
+    #[default]
     ReadWrite,
     ReadOnly
 }
 
-pub fn remount(mount_type: MountType) {
+pub fn remount(mount_type: &MountType) {
     match mount_type {
         MountType::ReadWrite => {
             log_info!("Remounting /system in rw mode...");
