@@ -7,7 +7,7 @@ pub fn update() {
     
     remount(&MountType::ReadWrite);
     mount();
-    subprocess::Exec::shell("/usr/sbin/chroot /system apt update && apt -q upgrade").popen().unwrap();
+    subprocess::Exec::shell("/usr/sbin/chroot /system sh -c 'apt update && apt -q upgrade'").popen().unwrap();
 
     lock();
     remount(&MountType::ReadOnly);
