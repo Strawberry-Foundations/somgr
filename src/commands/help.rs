@@ -14,7 +14,10 @@ pub fn help() {
     {CYAN}{BOLD}unlock:{C_RESET} Unlock apt package update for userspace
     {CYAN}{BOLD}mount:{C_RESET} Bind /dev, /sys & /proc to your system partition
     {CYAN}{BOLD}umount:{C_RESET} Unmount bindings in /system
-    {CYAN}{BOLD}remount:{C_RESET} Remount your system partition and make it writeable
+    {CYAN}{BOLD}remount:{C_RESET} Remount your system partition in a specific mode
+    {BOLD}↳ {MAGENTA}Options:{C_RESET}
+        {CYAN}{BOLD}-ro, --readonly{C_RESET}  Remount in readonly (ro) mode
+        {CYAN}{BOLD}-rw, --readwrite{C_RESET} Remount in readwrite (rw) mode
 ", *VERSION);
     std::process::exit(0);
 }
