@@ -10,7 +10,7 @@ fn main() -> eyre::Result<()> {
         Command::Shell => commands::shell::shell(),
         Command::Mount => commands::mount::mount(),
         Command::Umount => commands::mount::umount(),
-        Command::Remount => commands::mount::remount(),
+        Command::Remount => commands::mount::remount(&ARGS.options.mount_type),
         Command::Update => commands::update::update(),
         Command::Lock => commands::lock::lock(),
         Command::Unlock => commands::unlock::unlock(),
