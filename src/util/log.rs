@@ -6,7 +6,7 @@ macro_rules! log_info {
 }
 
 #[macro_export]
-macro_rules! log_error {
+macro_rules! log_fail {
     ($string:expr) => {
         println!("\x1b[1m\x1b[41m   FAIL   \x1b[0m  {}\x1b[0m", $string);
     };
