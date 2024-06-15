@@ -2,10 +2,11 @@ use subprocess::NullFile;
 
 use crate::{log_fail, log_info};
 use crate::util::dpkg;
-use crate::util::verification::os_verifier;
+use crate::util::verification::{os_verifier, root_verifier};
 
 pub fn unlock() {
     os_verifier();
+    root_verifier();
     
     log_info!("Unlocking apt (DANGEROUS!) ...");
 
