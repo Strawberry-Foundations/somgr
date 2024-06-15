@@ -1,6 +1,6 @@
 use subprocess::NullFile;
 
-use crate::log_info;
+use crate::{log_fail, log_info};
 use crate::util::dpkg;
 
 pub fn unlock() {
@@ -17,6 +17,6 @@ pub fn unlock() {
     if exit_status.success() {
         log_info!("Finished apt unlocking");
     } else {
-        eprintln!("Command execution failed");
+        log_fail!("Command execution failed");
     }
 }
