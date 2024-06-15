@@ -2,10 +2,12 @@ use subprocess::NullFile;
 
 use crate::{log_fail, log_info};
 use crate::util::dpkg;
-use crate::util::verification::os_verifier;
+use crate::util::verification::{os_verifier, root_verifier};
 
 pub fn lock() {
     os_verifier();
+    root_verifier();
+    
     log_info!("Locking apt ...");
 
     let packages = dpkg::get_packages();
