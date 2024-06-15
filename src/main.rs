@@ -16,7 +16,12 @@ fn main() -> eyre::Result<()> {
         Command::Unlock => commands::unlock::unlock(),
         Command::About => commands::about::about(),
         Command::Reboot => {
-            
+            if OPTIONS.fw {
+                commands::reboot::reboot_fw()
+            }
+            else {
+                commands::reboot::reboot()
+            }
         }
         Command::None => commands::help::help(),
     }
