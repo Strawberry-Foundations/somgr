@@ -1,10 +1,11 @@
 use subprocess::NullFile;
 use stblib::colors::{BOLD, C_RESET, GREEN, RESET};
+use crate::log_info;
 
 use crate::util::dpkg;
 
 pub fn lock() {
-    println!("{BOLD}{GREEN}=>{RESET} Locking apt ...{C_RESET}");
+    log_info!("Locking apt ...");
 
     let packages = dpkg::get_packages();
 
@@ -15,7 +16,7 @@ pub fn lock() {
         .expect("Failed to execute command");
 
     if exit_status.success() {
-        println!("{BOLD}{GREEN}=>{RESET} Finished apt locking ...{C_RESET}");
+        log_info!("Finished apt locking");
     } else {
         eprintln!("Command execution failed");
     }
