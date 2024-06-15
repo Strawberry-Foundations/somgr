@@ -22,6 +22,7 @@ pub enum Command {
 #[derive(Default)]
 pub struct Options {
     pub mount_type: MountType,
+    pub yes: bool,
 }
 
 pub struct Args {
@@ -86,6 +87,7 @@ impl Args {
 
                 "-ro" | "--readonly" => options.mount_type = MountType::ReadOnly,
                 "-rw" | "--readwrite" => options.mount_type = MountType::ReadWrite,
+                "-y" | "--yes" => options.yes = true,
 
                 _ => {
 
