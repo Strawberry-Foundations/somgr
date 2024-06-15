@@ -5,3 +5,4 @@ pub mod mount;
 pub mod update;
 pub mod lock;
 pub mod unlock;
+mod reboot;
