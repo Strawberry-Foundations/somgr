@@ -15,6 +15,9 @@ fn main() -> eyre::Result<()> {
         Command::Lock => commands::lock::lock(),
         Command::Unlock => commands::unlock::unlock(),
         Command::About => commands::about::about(),
+        Command::Reboot => {
+            
+        }
         Command::None => commands::help::help(),
     }
 
