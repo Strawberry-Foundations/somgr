@@ -13,10 +13,13 @@ pub fn help() {
     {CYAN}{BOLD}unlock:{C_RESET} Unlock apt package update for userspace
     {CYAN}{BOLD}mount:{C_RESET} Bind /dev, /sys & /proc to your system partition
     {CYAN}{BOLD}umount:{C_RESET} Unmount bindings in /system
+    {CYAN}{BOLD}reboot:{C_RESET} Reboot system
+    {BOLD}↳ {MAGENTA}Options:{C_RESET}
+        {CYAN}{BOLD}-fw, --firmware{C_RESET}  Reboot into firmware settings
 
     {CYAN}{BOLD}update:{C_RESET} Updates the system partition
     {BOLD}↳ {MAGENTA}Options:{C_RESET}
-        {CYAN}{BOLD}-y, --yes{C_RESET}  Automatically accept package updates 
+        {CYAN}{BOLD}-y, --yes{C_RESET}  Automatically accept package updates
 
     {CYAN}{BOLD}remount:{C_RESET} Remount your system partition in a specific mode
     {BOLD}↳ {MAGENTA}Options:{C_RESET}
