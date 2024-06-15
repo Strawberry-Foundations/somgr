@@ -16,6 +16,7 @@ pub enum Command {
     Update,
     Lock,
     Unlock,
+    Reboot,
     None
 }
 
@@ -23,6 +24,7 @@ pub enum Command {
 pub struct Options {
     pub mount_type: MountType,
     pub yes: bool,
+    pub fw: bool,
 }
 
 pub struct Args {
@@ -61,6 +63,7 @@ impl Args {
             "lock" => args.command = Command::Lock,
             "unlock" => args.command = Command::Unlock,
             "about" => args.command = Command::About,
+            "reboot" => args.command = Command::Reboot,
             _ => args.command = Command::None,
         }
 
@@ -88,6 +91,7 @@ impl Args {
                 "-ro" | "--readonly" => options.mount_type = MountType::ReadOnly,
                 "-rw" | "--readwrite" => options.mount_type = MountType::ReadWrite,
                 "-y" | "--yes" => options.yes = true,
+                "-fw" | "--firmware" => options.fw = true,
 
                 _ => {
 
