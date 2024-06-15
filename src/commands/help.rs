@@ -8,12 +8,15 @@ pub fn help() {
 {MAGENTA}{BOLD}Commands:{C_RESET}
     {CYAN}{BOLD}help:{C_RESET} Prints this message
     {CYAN}{BOLD}about:{C_RESET} About StrawberryOS Manager
-    {CYAN}{BOLD}shell:{C_RESET} Opens a new system shell 
-    {CYAN}{BOLD}update:{C_RESET} Updates the system partition
+    {CYAN}{BOLD}shell:{C_RESET} Opens a new system shell
     {CYAN}{BOLD}lock:{C_RESET} Lock apt package update for userspace
     {CYAN}{BOLD}unlock:{C_RESET} Unlock apt package update for userspace
     {CYAN}{BOLD}mount:{C_RESET} Bind /dev, /sys & /proc to your system partition
     {CYAN}{BOLD}umount:{C_RESET} Unmount bindings in /system
+
+    {CYAN}{BOLD}update:{C_RESET} Updates the system partition
+    {BOLD}↳ {MAGENTA}Options:{C_RESET}
+        {CYAN}{BOLD}-y, --yes{C_RESET}  Automatically accept package updates 
     {CYAN}{BOLD}remount:{C_RESET} Remount your system partition in a specific mode
     {BOLD}↳ {MAGENTA}Options:{C_RESET}
         {CYAN}{BOLD}-ro, --readonly{C_RESET}  Remount in readonly (ro) mode     {GREEN}{BOLD}[default]{C_RESET}
