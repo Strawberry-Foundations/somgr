@@ -1,6 +1,7 @@
 use std::env;
 use lazy_static::lazy_static;
 use stblib::colors::{BOLD, C_RESET, RED, RESET};
+use crate::commands::mount::MountType;
 
 lazy_static!(
     pub static ref ARGS: Args = Args::collect();
@@ -21,8 +22,7 @@ pub enum Command {
 
 #[derive(Default)]
 pub struct Options {
-    pub ro: bool,
-    pub rw: bool,
+    pub mount_type: MountType,
 }
 
 pub struct Args {
@@ -87,8 +87,8 @@ impl Args {
                     }
                 }, */
 
-                "-ro" | "--readonly" => options.ro = true,
-                "-rw" | "--readwrite" => options.rw = true,
+                "-ro" | "--readonly" => options.mount_type = MountType::ReadOnly,
+                "-rw" | "--readwrite" => options.mount_type = MountType::ReadWrite,
 
                 _ => {
      
