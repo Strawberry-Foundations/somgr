@@ -1,5 +1,4 @@
 use subprocess::NullFile;
-use stblib::colors::{BOLD, C_RESET, GREEN, RESET};
 use crate::log_info;
 
 use crate::util::dpkg;
