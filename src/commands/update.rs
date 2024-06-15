@@ -5,12 +5,12 @@ use crate::log_info;
 pub fn update() {
     log_info!("Starting os update ...");
     
-    remount(MountType::ReadWrite);
+    remount(&MountType::ReadWrite);
     mount();
     subprocess::Exec::shell("/usr/sbin/chroot /system apt update && apt -q upgrade").popen().unwrap();
 
     lock();
-    remount(MountType::ReadOnly);
+    remount(&MountType::ReadOnly);
     umount();
     
     log_info!("Finished os update ...");
