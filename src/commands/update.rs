@@ -6,7 +6,7 @@ pub fn update() {
     log_info!("Starting os update ...");
     
     mount();
-    subprocess::Exec::shell("/usr/sbin/chroot / apt update && apt -q upgrade").popen().unwrap();
+    subprocess::Exec::shell("/usr/sbin/chroot /system apt update && apt -q upgrade").popen().unwrap();
 
     lock();
     umount();
