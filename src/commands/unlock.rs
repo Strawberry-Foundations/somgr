@@ -2,8 +2,11 @@ use subprocess::NullFile;
 
 use crate::{log_fail, log_info};
 use crate::util::dpkg;
+use crate::util::verification::os_verifier;
 
 pub fn unlock() {
+    os_verifier();
+    
     log_info!("Unlocking apt (DANGEROUS!) ...");
 
     let packages = dpkg::get_packages();
