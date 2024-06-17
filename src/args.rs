@@ -38,8 +38,6 @@ pub struct Options {
     pub fw: bool,
 }
 
-
-
 impl Args {
     pub fn collect() -> Self {
         let mut args = Self::default();
@@ -95,9 +93,7 @@ impl Args {
                 "-y" | "--yes" => options.yes = true,
                 "-fw" | "--firmware" => options.fw = true,
 
-                _ => {
-
-                }
+                _ => {}
             }
         }
 
