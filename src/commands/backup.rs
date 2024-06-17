@@ -4,7 +4,15 @@ use crate::args::ARGS;
 use crate::commands;
 use crate::commands::login::Credentials;
 
-pub fn main() {
+pub async fn main() {
+    let credentials = match Credentials::read() {
+        Ok(creds) => creds,
+        Err(..) => {
+            println!("{RED}{BOLD}Please authenticate with your Strawberry ID before using somgr's Backup function{C_RESET}");
+            return;
+        }
+    };
+    
     match ARGS.subcommand.as_str() {
         "restore" => {
 
@@ -24,12 +32,10 @@ pub fn main() {
         "status" => {
 
         }
-        _ => {
-            if Credentials::read().is_ok() {
-                commands::help::help()
-            } else {
-                println!("{RED}{BOLD}Please authenticate with your Strawberry ID before using somgr's Backup function{C_RESET}")
-            }
-        }
+        _ => commands::help::help()
     }
+}
+
+pub async fn status(credentials: Credentials) {
+    
 }
