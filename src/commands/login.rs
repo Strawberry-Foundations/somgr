@@ -17,8 +17,8 @@ pub struct StrawberryId {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Credentials {
-    username: String,
-    token: String,
+    pub username: String,
+    pub token: String,
 }
 
 impl StrawberryId {
