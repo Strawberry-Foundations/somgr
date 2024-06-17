@@ -1177,12 +1177,16 @@ name = "somgr"
 version = "0.1.6"
 dependencies = [
  "cmd_lib",
+ "dirs",
  "eyre",
  "futures-util",
  "lazy_static",
  "libc",
  "nix",
  "reqwest",
+ "serde",
+ "serde_json",
+ "serde_yaml",
  "stblib",
  "subprocess",
  "tokio",
