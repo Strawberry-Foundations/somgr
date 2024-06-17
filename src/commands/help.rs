@@ -24,8 +24,13 @@ pub fn help() {
 
     {CYAN}{BOLD}remount:{C_RESET} Remount your system partition in a specific mode
     {BOLD}↳ {MAGENTA}Options:{C_RESET}
-        {CYAN}{BOLD}-ro, --readonly{C_RESET}  Remount in readonly (ro) mode     {GREEN}{BOLD}[default]{C_RESET}
-        {CYAN}{BOLD}-rw, --readwrite{C_RESET} Remount in readwrite (rw) mode
+        {CYAN}{BOLD}-ro, --readonly{C_RESET}   Remount in readonly (ro) mode     {GREEN}{BOLD}[default]{C_RESET}
+        {CYAN}{BOLD}-rw, --readwrite{C_RESET}  Remount in readwrite (rw) mode
+
+    {CYAN}{BOLD}backup:{C_RESET} StrawberryOS Backup management
+    {BOLD}↳ {MAGENTA}Subcommands:{C_RESET}
+        {CYAN}{BOLD}restore{C_RESET}  Restore a previously created backup
+        {CYAN}{BOLD}upload {C_RESET}  Create a new backup and upload it
 ", *VERSION);
     std::process::exit(0);
 }
