@@ -7,4 +7,4 @@ pub mod lock;
 pub mod unlock;
 pub mod reboot;
 pub mod backup;
-mod login;
+pub mod login;
