@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use tokio::time::{self, Duration};
 use serde_json::Value;
 
-use stblib::colors::{BLACK, BLUE, BOLD, C_RESET, GREEN, RED, RESET, YELLOW};
+use stblib::colors::{BLUE, BOLD, C_RESET, GREEN, RED, RESET, YELLOW};
 use crate::statics::STRAWBERRY_ID_API;
 
 #[derive(Debug, Default, Clone)]
@@ -16,7 +16,7 @@ pub struct StrawberryId {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct Credentials {
+pub struct Credentials {
     username: String,
     token: String,
 }
@@ -94,7 +94,7 @@ pub async fn login() -> eyre::Result<()> {
     };
 
     println!("Go to {BOLD}{BLUE}{STRAWBERRY_ID_API}de/login/oauth_dialog/sbcloud?code={code}{C_RESET}");
-    
+
     let mut auth = StrawberryId::default();
     let credentials = auth.login(code).await?;
 
