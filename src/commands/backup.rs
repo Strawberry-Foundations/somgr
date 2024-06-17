@@ -63,7 +63,7 @@ pub async fn status(credentials: Credentials) {
         }
     } else { Status::default() };
 
-    println!("{GREEN}{BOLD}{UNDERLINE}Strawberry Cloud{C_RESET}");
+    println!("{GREEN}{BOLD}{UNDERLINE}Strawberry Cloud - Usage{C_RESET}");
     let percent = calc_percent(status.storage_quota_used, status.storage_quota_max);
 
     let progress_bar = ProgressBar::new(status.storage_quota_max);
