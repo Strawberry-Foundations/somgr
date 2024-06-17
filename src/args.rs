@@ -7,6 +7,7 @@ lazy_static!(
     pub static ref OPTIONS: Options = Args::collect().collect_options();
 );
 
+#[derive(Default)]
 pub enum Command {
     Shell,
     About,
@@ -18,7 +19,16 @@ pub enum Command {
     Unlock,
     Reboot,
     Backup,
+    #[default]
     None
+}
+
+#[derive(Default)]
+pub struct Args {
+    pub args: Vec<String>,
+    pub command: Command,
+    pub subcommand: String,
+    pub command_str: String,
 }
 
 #[derive(Default)]
@@ -28,19 +38,11 @@ pub struct Options {
     pub fw: bool,
 }
 
-pub struct Args {
-    pub args: Vec<String>,
-    pub command: Command,
-    pub command_str: String,
-}
+
 
 impl Args {
     pub fn collect() -> Self {
-        let mut args = Self {
-            args: vec![],
-            command: Command::None,
-            command_str: String::new(),
-        };
+        let mut args = Self::default();
 
         let collector: Vec<String> = env::args().collect();
 
