@@ -5,7 +5,8 @@ pub mod commands;
 pub mod statics;
 pub mod util;
 
-fn main() -> eyre::Result<()> {
+#[tokio::main]
+async fn main() -> eyre::Result<()> {
     match ARGS.command {
         Command::Shell => commands::shell::shell(),
         Command::Mount => commands::mount::mount(),
@@ -23,7 +24,7 @@ fn main() -> eyre::Result<()> {
                 commands::reboot::reboot()
             }
         }
-        Command::Login => commands::login::login(),
+        Command::Login => commands::login::login().await,
         Command::Backup => commands::backup::main(),
         Command::None => commands::help::help(),
     }
