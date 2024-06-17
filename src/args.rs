@@ -17,6 +17,7 @@ pub enum Command {
     Lock,
     Unlock,
     Reboot,
+    Backup,
     None
 }
 
@@ -31,7 +32,6 @@ pub struct Args {
     pub args: Vec<String>,
     pub command: Command,
     pub command_str: String,
-    pub options: Options,
 }
 
 impl Args {
@@ -40,7 +40,6 @@ impl Args {
             args: vec![],
             command: Command::None,
             command_str: String::new(),
-            options: Options { ..Default::default() }
         };
 
         let collector: Vec<String> = env::args().collect();
@@ -64,6 +63,7 @@ impl Args {
             "unlock" => args.command = Command::Unlock,
             "about" => args.command = Command::About,
             "reboot" => args.command = Command::Reboot,
+            "backup" => args.command = Command::Backup,
             _ => args.command = Command::None,
         }
 
