@@ -53,6 +53,7 @@ impl Args {
 
         args.args.clone_from(&parser);
         args.command_str = parser.clone().first().unwrap().to_string();
+        args.subcommand = parser.clone().get(1).unwrap_or(&String::new()).to_string();
 
         match args.command_str.as_str() {
             "shell" => args.command = Command::Shell,
