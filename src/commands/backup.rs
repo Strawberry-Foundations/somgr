@@ -1,3 +1,4 @@
+use std::path::Path;
 use indicatif::{ProgressBar, ProgressStyle};
 use stblib::colors::{BOLD, C_RESET, GREEN, RED, UNDERLINE, YELLOW};
 
@@ -5,7 +6,7 @@ use crate::args::ARGS;
 use crate::commands;
 use crate::commands::login::Credentials;
 use crate::statics::STRAWBERRY_CLOUD_API;
-use crate::utilities::{calc_percent, format_size, serializer};
+use crate::utilities::{calc_percent, format_size, make_absolute_path, serializer};
 
 pub async fn main() {
     let credentials = match Credentials::read() {
@@ -87,4 +88,43 @@ pub async fn status(credentials: Credentials) {
     else {
         println!();
     }
+}
+
+
+pub async fn add(credentials: Credentials) -> Result<(), reqwest::Error> {
+    let client = reqwest::Client::new();
+
+    let parser: Vec<String> = std::env::args().skip(2).collect();
+    let file = parser.clone().first().unwrap().to_string();
+
+    let file_path = make_absolute_path(file.as_str());
+    let path = Path::new(&file_path);
+
+    let filename = if let Some(file_name) = path.file_name() {
+        if let Some(file_name_str) = file_name.to_str() {
+            file_name_str
+        } else {
+            eprintln!("Invalid filename");
+            std::process::exit(1)
+        }
+    } else {
+        eprintln!("No filename found");
+        std::process::exit(1)
+    };
+
+    println!("{}", path.to_str().unwrap());
+
+    let url = format!("{STRAWBERRY_CLOUD_API}upload/{}@{}?filename={filename}", credentials.username, credentials.token);
+
+    let file_content = std::fs::read(file_path).unwrap();
+
+    let response = client.post(url)
+        .header("Content-Type", "multipart/form-data")
+        .body(file_content)
+        .send()
+        .await?;
+
+    println!("{}", response.text().await?);
+
+    Ok(())
 }
