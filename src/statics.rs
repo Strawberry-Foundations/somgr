@@ -3,6 +3,8 @@ use lazy_static::lazy_static;
 use stblib::logging::Logger;
 use stblib::colors::{BLUE, BOLD, C_RESET, CYAN, GREEN, RED, YELLOW};
 
+pub const STRAWBERRY_ID_API: &str = "https://id.strawberryfoundations.xyz/v2/";
+
 lazy_static! {
     pub static ref VERSION: String = env!("CARGO_PKG_VERSION").to_string();
 
