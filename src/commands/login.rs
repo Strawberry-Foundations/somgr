@@ -55,6 +55,27 @@ impl StrawberryId {
     }
 }
 
+impl Credentials {
+    pub fn read() -> Result<Self, Box<dyn std::error::Error>> {
+        if let Some(home_dir) = dirs::home_dir() {
+            let config_dir = home_dir.join(".config").join("strawberry-id");
+            let credentials_path = config_dir.join("credentials.yml");
+
+            if credentials_path.exists() {
+                let credentials_str = fs::read_to_string(&credentials_path)?;
+
+                let credentials: Self = serde_yaml::from_str(&credentials_str)?;
+
+                Ok(credentials)
+            } else {
+                Err(format!("{RED}{BOLD}Error while reading credentials:{RESET} credentials.yml does not exist. Please run somgr login to authenticate your Strawberry ID.{C_RESET}").into())
+            }
+        } else {
+            Err(format!("{RED}{BOLD}Error while reading credentials:{RESET} Home directory not found.{C_RESET}").into())
+        }
+    }
+}
+
 pub async fn login() -> eyre::Result<()> {
     println!("{BOLD}{GREEN}--- Strawberry ID Login ---{C_RESET}");
 
