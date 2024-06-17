@@ -13,3 +13,8 @@ nix = { version = "0.29.0", features = ["user"] }
 libc = "0.2.155"
 cmd_lib = "1.9.4"
 subprocess = "0.2.9"
+
+futures-util = { version = "0.3.30", features = ["sink"] }
+tokio = { version = "1.38.0", features = ["macros"] }
+tokio-util = { version = "0.7.11", features = ["codec"] }
+reqwest = "0.12.5"
