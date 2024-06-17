@@ -21,6 +21,9 @@ pub fn main() {
         "list" => {
 
         }
+        "status" => {
+
+        }
         _ => {
             if Credentials::read().is_ok() {
                 commands::help::help()
