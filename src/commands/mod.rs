@@ -6,3 +6,4 @@ pub mod update;
 pub mod lock;
 pub mod unlock;
 pub mod reboot;
+pub mod backup;
