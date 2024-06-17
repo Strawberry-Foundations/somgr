@@ -18,6 +18,7 @@ pub enum Command {
     Lock,
     Unlock,
     Reboot,
+    Login,
     Backup,
     #[default]
     None
@@ -63,6 +64,7 @@ impl Args {
             "unlock" => args.command = Command::Unlock,
             "about" => args.command = Command::About,
             "reboot" => args.command = Command::Reboot,
+            "login" => args.command = Command::Login,
             "backup" => args.command = Command::Backup,
             _ => args.command = Command::None,
         }
