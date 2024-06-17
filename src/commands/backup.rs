@@ -24,9 +24,7 @@ pub async fn main() {
         "upload" => {
 
         }
-        "add" => {
-
-        }
+        "add" => add(credentials).await,
         "remove" => {
 
         }
@@ -91,7 +89,7 @@ pub async fn status(credentials: Credentials) {
 }
 
 
-pub async fn add(credentials: Credentials) -> Result<(), reqwest::Error> {
+pub async fn add(credentials: Credentials) {
     let client = reqwest::Client::new();
 
     let parser: Vec<String> = std::env::args().skip(2).collect();
@@ -122,9 +120,7 @@ pub async fn add(credentials: Credentials) -> Result<(), reqwest::Error> {
         .header("Content-Type", "multipart/form-data")
         .body(file_content)
         .send()
-        .await?;
+        .await.unwrap();
 
-    println!("{}", response.text().await?);
-
-    Ok(())
+    println!("{}", response.text().await.unwrap());
 }
