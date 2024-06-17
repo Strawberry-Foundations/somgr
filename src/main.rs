@@ -23,6 +23,7 @@ fn main() -> eyre::Result<()> {
                 commands::reboot::reboot()
             }
         }
+        Command::Backup => commands::backup::main(),
         Command::None => commands::help::help(),
     }
 
