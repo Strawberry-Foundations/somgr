@@ -24,7 +24,7 @@ async fn main() -> eyre::Result<()> {
                 commands::reboot::reboot()
             }
         }
-        Command::Login => commands::login::login().await,
+        Command::Login => commands::login::login().await?,
         Command::Backup => commands::backup::main(),
         Command::None => commands::help::help(),
     }
