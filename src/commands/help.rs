@@ -14,23 +14,26 @@ pub fn help() {
     {CYAN}{BOLD}mount:{C_RESET} Bind /dev, /sys & /proc to your system partition
     {CYAN}{BOLD}umount:{C_RESET} Unmount bindings in /system
 
-    {CYAN}{BOLD}reboot:{C_RESET} Reboot system
-    {BOLD}↳ {MAGENTA}Options:{C_RESET}
-        {CYAN}{BOLD}-fw, --firmware{C_RESET}  Reboot into firmware settings
-
-    {CYAN}{BOLD}update:{C_RESET} Updates the system partition
-    {BOLD}↳ {MAGENTA}Options:{C_RESET}
-        {CYAN}{BOLD}-y, --yes{C_RESET}  Automatically accept package updates
-
     {CYAN}{BOLD}remount:{C_RESET} Remount your system partition in a specific mode
     {BOLD}↳ {MAGENTA}Options:{C_RESET}
         {CYAN}{BOLD}-ro, --readonly{C_RESET}   Remount in readonly (ro) mode     {GREEN}{BOLD}[default]{C_RESET}
         {CYAN}{BOLD}-rw, --readwrite{C_RESET}  Remount in readwrite (rw) mode
 
+    {CYAN}{BOLD}update:{C_RESET} Updates the system partition
+    {BOLD}↳ {MAGENTA}Options:{C_RESET}
+        {CYAN}{BOLD}-y, --yes{C_RESET}  Automatically accept package updates
+
+    {CYAN}{BOLD}reboot:{C_RESET} Reboot system
+    {BOLD}↳ {MAGENTA}Options:{C_RESET}
+        {CYAN}{BOLD}-fw, --firmware{C_RESET}  Reboot into firmware settings
+
     {CYAN}{BOLD}backup:{C_RESET} StrawberryOS Backup management
     {BOLD}↳ {MAGENTA}Subcommands:{C_RESET}
         {CYAN}{BOLD}restore{C_RESET}  Restore a previously created backup
         {CYAN}{BOLD}upload {C_RESET}  Create a new backup and upload it
+        {CYAN}{BOLD}add    {C_RESET}  Add new files to the backup
+        {CYAN}{BOLD}remove {C_RESET}  Remove files from backup
+        {CYAN}{BOLD}list   {C_RESET}  Show backups & files
 ", *VERSION);
     std::process::exit(0);
 }
