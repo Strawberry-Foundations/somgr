@@ -13,6 +13,7 @@ pub fn help() {
     {CYAN}{BOLD}unlock:{C_RESET} Unlock apt package update for userspace
     {CYAN}{BOLD}mount:{C_RESET} Bind /dev, /sys & /proc to your system partition
     {CYAN}{BOLD}umount:{C_RESET} Unmount bindings in /system
+
     {CYAN}{BOLD}reboot:{C_RESET} Reboot system
     {BOLD}↳ {MAGENTA}Options:{C_RESET}
         {CYAN}{BOLD}-fw, --firmware{C_RESET}  Reboot into firmware settings
