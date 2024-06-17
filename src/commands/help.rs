@@ -35,6 +35,7 @@ pub fn help() {
         {CYAN}{BOLD}add    {C_RESET}  Add new files to the backup
         {CYAN}{BOLD}remove {C_RESET}  Remove files from backup
         {CYAN}{BOLD}list   {C_RESET}  Show backups & files
+        {CYAN}{BOLD}status {C_RESET}  Show usage of your cloud data
 ", *VERSION);
     std::process::exit(0);
 }
