@@ -19,6 +19,7 @@ pub async fn main() {
     };
 
     match ARGS.subcommand.as_str() {
+        "setup" => (),
         "restore" => {
 
         }
