@@ -182,7 +182,7 @@ pub fn remove() {
 pub async fn upload(credentials: Credentials) {
     let client = reqwest::Client::new();
 
-    let parser: Vec<String> = std::env::args().skip(2).collect();
+    let parser: Vec<String> = env::args().skip(2).collect();
     let file = parser.clone().first().unwrap().to_string();
 
 
@@ -205,7 +205,7 @@ pub async fn upload(credentials: Credentials) {
 
     let url = format!("{STRAWBERRY_CLOUD_API}upload/{}@{}?filename={filename}", credentials.username, credentials.token);
 
-    let file_content = std::fs::read(file_path).unwrap();
+    let file_content = fs::read(file_path).unwrap();
 
     let response = client.post(url)
         .header("Content-Type", "multipart/form-data")
