@@ -40,6 +40,7 @@ pub async fn main() {
     }
 }
 
+/// # Read backup file
 fn read_backup_file(file_path: &PathBuf) -> io::Result<BackupConfig> {
     let mut file = File::open(file_path).unwrap();
     let mut content = String::new();
@@ -48,6 +49,7 @@ fn read_backup_file(file_path: &PathBuf) -> io::Result<BackupConfig> {
     Ok(config)
 }
 
+/// # Write content to backup file
 fn write_backup_file(file_path: &PathBuf, config: &BackupConfig) -> io::Result<()> {
     let content = serde_yaml::to_string(config).unwrap();
     let mut file = File::create(file_path).unwrap();
@@ -55,6 +57,7 @@ fn write_backup_file(file_path: &PathBuf, config: &BackupConfig) -> io::Result<(
     Ok(())
 }
 
+/// # Add a new entry to the backup file
 fn add_to_backup_file(new_path: String) -> io::Result<()> {
     let home_dir = env::var("HOME").unwrap();
     let config_dir = PathBuf::from(home_dir).join(".config/somgr");
@@ -77,6 +80,7 @@ fn add_to_backup_file(new_path: String) -> io::Result<()> {
     Ok(())
 }
 
+/// # Remove an entry from the backup file
 fn remove_from_backup_file(path_to_remove: &str) -> io::Result<()> {
     let home_dir = env::var("HOME").unwrap();
     let config_dir = PathBuf::from(home_dir).join(".config/somgr");
