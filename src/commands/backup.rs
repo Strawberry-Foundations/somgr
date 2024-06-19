@@ -1,17 +1,22 @@
 use std::path::{Path, PathBuf};
-use std::{fs, env};
+use std::{fs, env, io};
 use std::fs::File;
-use std::io::Write;
+use std::io::{Read, Write};
 
 use indicatif::{ProgressBar, ProgressStyle};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use stblib::colors::{BOLD, C_RESET, GREEN, RED, UNDERLINE, YELLOW};
 
 use crate::args::ARGS;
 use crate::commands;
 use crate::commands::login::Credentials;
-use crate::statics::STRAWBERRY_CLOUD_API;
 use crate::utilities::{calc_percent, format_size, make_absolute_path, serializer};
+use crate::statics::STRAWBERRY_CLOUD_API;
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct BackupConfig {
+    backup: Vec<String>,
+}
 
 pub async fn main() {
     let credentials = match Credentials::read() {
@@ -30,7 +35,7 @@ pub async fn main() {
         "upload" => {
 
         }
-        "add" => add(credentials).await,
+        "add" => add(),
         "remove" => {
 
         }
@@ -58,6 +63,100 @@ pub fn setup() {
     eprintln!("{GREEN}{BOLD}Configured StrawberryOS Backups{C_RESET}");
 }
 
+pub fn add() {
+    fn read_backup_file(file_path: &PathBuf) -> io::Result<BackupConfig> {
+        let mut file = File::open(file_path).unwrap();
+        let mut content = String::new();
+        file.read_to_string(&mut content).unwrap();
+        let config: BackupConfig = serde_yaml::from_str(&content).unwrap();
+        Ok(config)
+    }
+
+    fn write_backup_file(file_path: &PathBuf, config: &BackupConfig) -> io::Result<()> {
+        let content = serde_yaml::to_string(config).unwrap();
+        let mut file = File::create(file_path).unwrap();
+        file.write_all(content.as_bytes())?;
+        Ok(())
+    }
+
+    fn add_to_backup_file(new_path: String) -> io::Result<()> {
+        let home_dir = env::var("HOME").unwrap();
+        let config_dir = PathBuf::from(home_dir).join(".config/somgr");
+
+        let backup_file_path = config_dir.join("backup.yml");
+
+        let mut config = read_backup_file(&backup_file_path).unwrap_or_else(|_| BackupConfig { backup: Vec::new() });
+
+        let home_dir = env::var("HOME").unwrap();
+        let new_path = new_path.replace(&home_dir, "%HOME%");
+
+        config.backup.push(new_path);
+
+        write_backup_file(&backup_file_path, &config)
+    }
+
+    let parser: Vec<String> = env::args().skip(3).collect();
+    let file = parser.clone().first().unwrap().to_string();
+
+    let file_path = make_absolute_path(file.as_str());
+    let path = Path::new(&file_path);
+
+    let _filename = if let Some(file_name) = path.file_name() {
+        if let Some(file_name_str) = file_name.to_str() {
+            file_name_str
+        } else {
+            eprintln!("Invalid filename");
+            std::process::exit(1)
+        }
+    } else {
+        eprintln!("No filename found");
+        std::process::exit(1)
+    };
+
+    let path = path.to_str().unwrap().to_string();
+
+    match add_to_backup_file(path) {
+        Ok(_) => println!("{GREEN}{BOLD}File successfully added{C_RESET}"),
+        Err(e) => eprintln!("{RED}{BOLD}:Error while adding file: {e}{C_RESET}"),
+    }
+}
+
+/* pub async fn add(credentials: Credentials) {
+    let client = reqwest::Client::new();
+
+    let parser: Vec<String> = std::env::args().skip(2).collect();
+    let file = parser.clone().first().unwrap().to_string();
+
+
+    let file_path = make_absolute_path(file.as_str());
+    let path = Path::new(&file_path);
+
+    let filename = if let Some(file_name) = path.file_name() {
+        if let Some(file_name_str) = file_name.to_str() {
+            file_name_str
+        } else {
+            eprintln!("Invalid filename");
+            std::process::exit(1)
+        }
+    } else {
+        eprintln!("No filename found");
+        std::process::exit(1)
+    };
+
+    println!("{}", path.to_str().unwrap());
+
+    let url = format!("{STRAWBERRY_CLOUD_API}upload/{}@{}?filename={filename}", credentials.username, credentials.token);
+
+    let file_content = std::fs::read(file_path).unwrap();
+
+    let response = client.post(url)
+        .header("Content-Type", "multipart/form-data")
+        .body(file_content)
+        .send()
+        .await.unwrap();
+
+    println!("{}", response.text().await.unwrap());
+} */
 
 pub async fn status(credentials: Credentials) {
     #[derive(Default)]
@@ -153,38 +252,3 @@ pub async fn list(credentials: Credentials) {
 }
 
 
-pub async fn add(credentials: Credentials) {
-    let client = reqwest::Client::new();
-
-    let parser: Vec<String> = std::env::args().skip(2).collect();
-    let file = parser.clone().first().unwrap().to_string();
-
-    let file_path = make_absolute_path(file.as_str());
-    let path = Path::new(&file_path);
-
-    let filename = if let Some(file_name) = path.file_name() {
-        if let Some(file_name_str) = file_name.to_str() {
-            file_name_str
-        } else {
-            eprintln!("Invalid filename");
-            std::process::exit(1)
-        }
-    } else {
-        eprintln!("No filename found");
-        std::process::exit(1)
-    };
-
-    println!("{}", path.to_str().unwrap());
-
-    let url = format!("{STRAWBERRY_CLOUD_API}upload/{}@{}?filename={filename}", credentials.username, credentials.token);
-
-    let file_content = std::fs::read(file_path).unwrap();
-
-    let response = client.post(url)
-        .header("Content-Type", "multipart/form-data")
-        .body(file_content)
-        .send()
-        .await.unwrap();
-
-    println!("{}", response.text().await.unwrap());
-}
