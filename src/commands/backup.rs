@@ -29,9 +29,7 @@ pub async fn main() {
         "remove" => {
 
         }
-        "list" => {
-
-        }
+        "list" => list(credentials).await,
         "status" => status(credentials).await,
         _ => commands::help::help()
     }
@@ -121,6 +119,10 @@ pub async fn list(credentials: Credentials) {
 
 
     println!("{GREEN}{BOLD}{UNDERLINE}Strawberry Cloud - Files{C_RESET}");
+    if files.is_empty() {
+        
+        println!("It seems like you don't have any files in your cloud ...");
+    }
     for file in files {
         println!("{}", file);
     }
