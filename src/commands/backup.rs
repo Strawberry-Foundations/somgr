@@ -203,6 +203,15 @@ pub async fn upload(credentials: Credentials) {
         }
     };
 
+    let url = format!("{STRAWBERRY_CLOUD_API}upload/{}@{}?filename=backup.yml&path=/sbos.backups", credentials.username, credentials.token);
+    let file_content = fs::read(backup_file_path).unwrap();
+
+    client.post(url)
+        .header("Content-Type", "multipart/form-data")
+        .body(file_content)
+        .send()
+        .await.unwrap();
+
     for path in config.backup {
         let home_dir = env::var("HOME").unwrap();
         let path = path.replace("%HOME%", &home_dir);
