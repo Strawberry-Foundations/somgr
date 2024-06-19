@@ -96,8 +96,11 @@ fn remove_from_backup_file(path_to_remove: &str) -> io::Result<()> {
         }
     };
 
+    let home_dir = env::var("HOME").unwrap();
+    let path_to_remove = path_to_remove.replace("%HOME%", &home_dir);
+
     if config.backup.contains(&path_to_remove.to_string()) {
-        config.backup.retain(|path| path != path_to_remove);
+        config.backup.retain(|path| path != path_to_remove.as_str());
         write_backup_file(&backup_file_path, &config)?;
         println!("{BOLD}{GREEN}File successfully removed from backup config{C_RESET}");
     } else {
