@@ -109,6 +109,7 @@ fn remove_from_backup_file(path_to_remove: &str) -> io::Result<()> {
     Ok(())
 }
 
+
 pub fn setup() {
     let home_dir = env::var("HOME").unwrap();
     let config_dir = PathBuf::from(home_dir).join(".config/somgr");
