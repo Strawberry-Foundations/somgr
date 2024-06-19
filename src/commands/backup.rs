@@ -1,6 +1,5 @@
 use std::path::{Path, PathBuf};
-use std::fs;
-use std::env;
+use std::{fs, env};
 use std::fs::File;
 use std::io::Write;
 
@@ -41,6 +40,7 @@ pub async fn main() {
     }
 }
 
+
 pub fn setup() {
     let home_dir = env::var("HOME").unwrap();
     let config_dir = PathBuf::from(home_dir).join(".config/somgr");
@@ -57,6 +57,7 @@ pub fn setup() {
     file.write_all(content.as_bytes()).unwrap();
     eprintln!("{GREEN}{BOLD}Configured StrawberryOS Backups{C_RESET}");
 }
+
 
 pub async fn status(credentials: Credentials) {
     #[derive(Default)]
