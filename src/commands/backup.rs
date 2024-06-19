@@ -119,8 +119,8 @@ pub async fn list(credentials: Credentials) {
 
 
     println!("{GREEN}{BOLD}{UNDERLINE}Strawberry Cloud - Files{C_RESET}");
+    
     if files.is_empty() {
-        
         println!("It seems like you don't have any files in your cloud ...");
     }
     for file in files {
