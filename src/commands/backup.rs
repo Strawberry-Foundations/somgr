@@ -1,4 +1,9 @@
-use std::path::Path;
+use std::path::{Path, PathBuf};
+use std::fs;
+use std::env;
+use std::fs::File;
+use std::io::Write;
+
 use indicatif::{ProgressBar, ProgressStyle};
 use serde::Deserialize;
 use stblib::colors::{BOLD, C_RESET, GREEN, RED, UNDERLINE, YELLOW};
@@ -36,14 +41,32 @@ pub async fn main() {
     }
 }
 
-#[derive(Default)]
-struct Status {
-    storage_quota_max: u64,
-    storage_quota_used: u64,
-    storage_quota_left: i64,
+pub async fn setup() {
+    let home_dir = env::var("HOME").unwrap();
+    let config_dir = PathBuf::from(home_dir).join(".config/somgr");
+
+    fs::create_dir_all(&config_dir).unwrap();
+
+    let backup_file_path = config_dir.join("backup.yml");
+
+    let content = r#"
+    backup:
+      - %HOME%/.bashrc
+    "#;
+
+    let mut file = File::create(backup_file_path).unwrap();
+    file.write_all(content.as_bytes()).unwrap();
+    eprintln!("{GREEN}{BOLD}Configured StrawberryOS Backups{C_RESET}");
 }
 
 pub async fn status(credentials: Credentials) {
+    #[derive(Default)]
+    struct Status {
+        storage_quota_max: u64,
+        storage_quota_used: u64,
+        storage_quota_left: i64,
+    }
+
     let url = format!("{STRAWBERRY_CLOUD_API}/status/{}@{}", credentials.username, credentials.token);
     let response = reqwest::get(url).await.unwrap();
     let body = response.text().await.unwrap();
@@ -120,7 +143,7 @@ pub async fn list(credentials: Credentials) {
 
 
     println!("{GREEN}{BOLD}{UNDERLINE}Strawberry Cloud - Files{C_RESET}");
-    
+
     if files.is_empty() {
         println!("It seems like you don't have any files in your cloud ...");
     }
