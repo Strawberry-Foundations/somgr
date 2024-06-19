@@ -5,7 +5,7 @@ use std::io::{Read, Write};
 
 use indicatif::{ProgressBar, ProgressStyle};
 use serde::{Deserialize, Serialize};
-use stblib::colors::{BOLD, C_RESET, GREEN, RED, UNDERLINE, YELLOW};
+use stblib::colors::{BOLD, C_RESET, CYAN, GREEN, RED, UNDERLINE, YELLOW};
 
 use crate::args::ARGS;
 use crate::commands;
@@ -222,7 +222,7 @@ pub async fn upload(credentials: Credentials) {
             std::process::exit(1)
         };
 
-        println!("{BOLD}{GREEN}Uploading file {}{C_RESET}", path.to_str().unwrap());
+        println!("{BOLD}{GREEN}Uploading file {CYAN}{}{C_RESET}", path.to_str().unwrap());
 
         let url = format!("{STRAWBERRY_CLOUD_API}upload/{}@{}?filename={filename}&path=/sbos.backups", credentials.username, credentials.token);
 
