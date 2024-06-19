@@ -90,9 +90,15 @@ pub fn add() {
         let home_dir = env::var("HOME").unwrap();
         let new_path = new_path.replace(&home_dir, "%HOME%");
 
-        config.backup.push(new_path);
-
-        write_backup_file(&backup_file_path, &config)
+        if !config.backup.contains(&new_path.to_string()) {
+            config.backup.push(new_path.to_string());
+            write_backup_file(&backup_file_path, &config)?;
+            println!("{GREEN}{BOLD}File successfully added{C_RESET}")
+        } else {
+            println!("{YELLOW}{BOLD}File already added{C_RESET}")
+        }
+        
+        Ok(())
     }
 
     let parser: Vec<String> = env::args().skip(3).collect();
@@ -116,7 +122,7 @@ pub fn add() {
     let path = path.to_str().unwrap().to_string();
 
     match add_to_backup_file(path) {
-        Ok(_) => println!("{GREEN}{BOLD}File successfully added{C_RESET}"),
+        Ok(_) => (),
         Err(e) => eprintln!("{RED}{BOLD}:Error while adding file: {e}{C_RESET}"),
     }
 }
