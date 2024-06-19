@@ -29,12 +29,8 @@ pub async fn main() {
 
     match ARGS.subcommand.as_str() {
         "setup" => setup(),
-        "restore" => {
-
-        }
-        "upload" => {
-
-        }
+        "restore" => (),
+        "upload" => upload(credentials).await,
         "add" => add(),
         "remove" => remove(),
         "list" => list(credentials).await,
@@ -184,9 +180,9 @@ pub async fn upload(credentials: Credentials) {
 
     let home_dir = env::var("HOME").unwrap();
     let config_dir = PathBuf::from(home_dir).join(".config/somgr");
-    
+
     let backup_file_path = config_dir.join("backup.yml");
-    
+
     let config = match read_backup_file(&backup_file_path) {
         Ok(cfg) => cfg,
         Err(_) => {
@@ -198,7 +194,7 @@ pub async fn upload(credentials: Credentials) {
     for path in config.backup {
         let home_dir = env::var("HOME").unwrap();
         let path = path.replace("%HOME%", &home_dir);
-        
+
         let file_path = make_absolute_path(path.as_str());
         let path = Path::new(&file_path);
 
@@ -228,7 +224,7 @@ pub async fn upload(credentials: Credentials) {
 
         println!("{}", response.text().await.unwrap());
     }
-    
+
 }
 
 pub async fn status(credentials: Credentials) {
