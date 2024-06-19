@@ -44,9 +44,9 @@ pub async fn main() {
 fn read_backup_file(file_path: &PathBuf) -> io::Result<BackupConfig> {
     let mut file = File::open(file_path).unwrap();
     let mut content = String::new();
-    
+
     file.read_to_string(&mut content).unwrap();
-    
+
     let config: BackupConfig = serde_yaml::from_str(&content).unwrap();
     Ok(config)
 }
@@ -55,7 +55,7 @@ fn read_backup_file(file_path: &PathBuf) -> io::Result<BackupConfig> {
 fn write_backup_file(file_path: &PathBuf, config: &BackupConfig) -> io::Result<()> {
     let content = serde_yaml::to_string(config).unwrap();
     let mut file = File::create(file_path).unwrap();
-    
+
     file.write_all(content.as_bytes())?;
     Ok(())
 }
@@ -75,7 +75,7 @@ fn add_to_backup_file(new_path: String) -> io::Result<()> {
     if !config.backup.contains(&new_path.to_string()) {
         config.backup.push(new_path.to_string());
         write_backup_file(&backup_file_path, &config)?;
-        
+
         println!("{GREEN}{BOLD}File successfully added to backup config{C_RESET}")
     } else {
         println!("{YELLOW}{BOLD}File already added to backup config{C_RESET}")
@@ -105,7 +105,7 @@ fn remove_from_backup_file(path_to_remove: &str) -> io::Result<()> {
     if config.backup.contains(&path_to_remove.to_string()) {
         config.backup.retain(|path| path != path_to_remove.as_str());
         write_backup_file(&backup_file_path, &config)?;
-        
+
         println!("{BOLD}{GREEN}File successfully removed from backup config{C_RESET}");
     } else {
         println!("{BOLD}{YELLOW}File is not in the backup config{C_RESET}");
@@ -129,7 +129,7 @@ pub fn setup() {
 
     let mut file = File::create(backup_file_path).unwrap();
     file.write_all(content.as_bytes()).unwrap();
-    
+
     eprintln!("{GREEN}{BOLD}Configured StrawberryOS Backups{C_RESET}");
 }
 
@@ -222,7 +222,7 @@ pub async fn upload(credentials: Credentials) {
             std::process::exit(1)
         };
 
-        println!("{}", path.to_str().unwrap());
+        println!("{BOLD}{GREEN}Uploading file {}{C_RESET}", path.to_str().unwrap());
 
         let url = format!("{STRAWBERRY_CLOUD_API}upload/{}@{}?filename={filename}&path=/sbos.backups", credentials.username, credentials.token);
 
@@ -319,7 +319,7 @@ pub async fn list(credentials: Credentials) {
 
     let root: Root = serde_json::from_str(body.as_str()).unwrap();
     let files: Vec<String> = root.data.files;
-    
+
     println!("{GREEN}{BOLD}{UNDERLINE}Strawberry Cloud - Files{C_RESET}");
 
     if files.is_empty() {
