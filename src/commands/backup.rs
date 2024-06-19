@@ -36,9 +36,7 @@ pub async fn main() {
 
         }
         "add" => add(),
-        "remove" => {
-
-        }
+        "remove" => remove(),
         "list" => list(credentials).await,
         "status" => status(credentials).await,
         _ => commands::help::help()
