@@ -203,7 +203,7 @@ pub async fn upload(credentials: Credentials) {
         }
     };
 
-    let url = format!("{STRAWBERRY_CLOUD_API}upload/{}@{}?filename=backup.yml&path=/sbos.backups", credentials.username, credentials.token);
+    let url = format!("{STRAWBERRY_CLOUD_API}upload/{}@{}?filename=backup.yml&path=sbos.backups", credentials.username, credentials.token);
     let file_content = fs::read(backup_file_path).unwrap();
 
     client.post(url)
