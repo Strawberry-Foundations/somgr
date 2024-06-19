@@ -30,6 +30,7 @@ pub fn help() {
 
     {CYAN}{BOLD}backup:{C_RESET} StrawberryOS Backup management
     {BOLD}↳ {MAGENTA}Subcommands:{C_RESET}
+        {CYAN}{BOLD}setup  {C_RESET}  Setup StrawberryOS backups
         {CYAN}{BOLD}restore{C_RESET}  Restore a previously created backup
         {CYAN}{BOLD}upload {C_RESET}  Create a new backup and upload it
         {CYAN}{BOLD}add    {C_RESET}  Add new files to the backup
