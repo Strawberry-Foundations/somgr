@@ -182,38 +182,53 @@ pub fn remove() {
 pub async fn upload(credentials: Credentials) {
     let client = reqwest::Client::new();
 
-    let parser: Vec<String> = env::args().skip(2).collect();
-    let file = parser.clone().first().unwrap().to_string();
-
-
-    let file_path = make_absolute_path(file.as_str());
-    let path = Path::new(&file_path);
-
-    let filename = if let Some(file_name) = path.file_name() {
-        if let Some(file_name_str) = file_name.to_str() {
-            file_name_str
-        } else {
-            eprintln!("Invalid filename");
-            std::process::exit(1)
+    let home_dir = env::var("HOME").unwrap();
+    let config_dir = PathBuf::from(home_dir).join(".config/somgr");
+    
+    let backup_file_path = config_dir.join("backup.yml");
+    
+    let config = match read_backup_file(&backup_file_path) {
+        Ok(cfg) => cfg,
+        Err(_) => {
+            println!("{RED}{BOLD}Backup configuration not found{C_RESET}");
+            std::process::exit(1);
         }
-    } else {
-        eprintln!("No filename found");
-        std::process::exit(1)
     };
 
-    println!("{}", path.to_str().unwrap());
+    for path in config.backup {
+        let home_dir = env::var("HOME").unwrap();
+        let path = path.replace("%HOME%", &home_dir);
+        
+        let file_path = make_absolute_path(path.as_str());
+        let path = Path::new(&file_path);
 
-    let url = format!("{STRAWBERRY_CLOUD_API}upload/{}@{}?filename={filename}", credentials.username, credentials.token);
+        let filename = if let Some(file_name) = path.file_name() {
+            if let Some(file_name_str) = file_name.to_str() {
+                file_name_str
+            } else {
+                eprintln!("Invalid filename");
+                std::process::exit(1)
+            }
+        } else {
+            eprintln!("No filename found");
+            std::process::exit(1)
+        };
 
-    let file_content = fs::read(file_path).unwrap();
+        println!("{}", path.to_str().unwrap());
 
-    let response = client.post(url)
-        .header("Content-Type", "multipart/form-data")
-        .body(file_content)
-        .send()
-        .await.unwrap();
+        let url = format!("{STRAWBERRY_CLOUD_API}upload/{}@{}?filename={filename}", credentials.username, credentials.token);
 
-    println!("{}", response.text().await.unwrap());
+        let file_content = fs::read(file_path).unwrap();
+
+        let response = client.post(url)
+            .header("Content-Type", "multipart/form-data")
+            .body(file_content)
+            .send()
+            .await.unwrap();
+
+        println!("{}", response.text().await.unwrap());
+    }
+    
 }
 
 pub async fn status(credentials: Credentials) {
