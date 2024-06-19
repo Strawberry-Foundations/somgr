@@ -50,8 +50,8 @@ pub fn setup() {
     let backup_file_path = config_dir.join("backup.yml");
 
     let content = r#"
-    backup:
-      - %HOME%/.bashrc
+backup:
+  - %HOME%/.bashrc
     "#;
 
     let mut file = File::create(backup_file_path).unwrap();
