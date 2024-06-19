@@ -323,5 +323,3 @@ pub async fn list(credentials: Credentials) {
         println!("{}", file);
     }
 }
-
-
