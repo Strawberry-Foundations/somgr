@@ -13,6 +13,7 @@ use crate::commands::login::Credentials;
 use crate::utilities::{calc_percent, format_size, make_absolute_path, serializer};
 use crate::statics::STRAWBERRY_CLOUD_API;
 
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct BackupConfig {
     backup: Vec<String>,
