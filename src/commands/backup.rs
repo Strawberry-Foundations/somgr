@@ -24,7 +24,7 @@ pub async fn main() {
     };
 
     match ARGS.subcommand.as_str() {
-        "setup" => (),
+        "setup" => setup(),
         "restore" => {
 
         }
@@ -41,7 +41,7 @@ pub async fn main() {
     }
 }
 
-pub async fn setup() {
+pub fn setup() {
     let home_dir = env::var("HOME").unwrap();
     let config_dir = PathBuf::from(home_dir).join(".config/somgr");
 
