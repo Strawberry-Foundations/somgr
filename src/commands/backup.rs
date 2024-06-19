@@ -1,5 +1,6 @@
 use std::path::Path;
 use indicatif::{ProgressBar, ProgressStyle};
+use serde::Deserialize;
 use stblib::colors::{BOLD, C_RESET, GREEN, RED, UNDERLINE, YELLOW};
 
 use crate::args::ARGS;
@@ -85,6 +86,43 @@ pub async fn status(credentials: Credentials) {
     }
     else {
         println!();
+    }
+}
+
+pub async fn list(credentials: Credentials) {
+    #[derive(Deserialize)]
+    struct Data {
+        files: Vec<String>,
+    }
+
+    #[derive(Deserialize)]
+    struct Root {
+        data: Data,
+    }
+
+    let url = format!("{STRAWBERRY_CLOUD_API}/list/{}@{}/sbos.backups", credentials.username, credentials.token);
+    let response = reqwest::get(url).await.unwrap();
+    let body = response.text().await.unwrap();
+
+    if let Ok(data) = serializer(body.as_str()) {
+        if data["data"] == "Invalid credentials" || data["data"] == "Invalid directory" {
+            eprintln!("{RED}{BOLD}Invalid credentials and/or invalid directory{C_RESET}");
+            std::process::exit(1);
+        }
+    }
+    else {
+        eprintln!("{RED}{BOLD}Invalid data{C_RESET}");
+        std::process::exit(1);
+    }
+
+    let root: Root = serde_json::from_str(body.as_str()).unwrap();
+    let files: Vec<String> = root.data.files;
+
+
+
+    println!("{GREEN}{BOLD}{UNDERLINE}Strawberry Cloud - Files{C_RESET}");
+    for file in files {
+        println!("{}", file);
     }
 }
 
