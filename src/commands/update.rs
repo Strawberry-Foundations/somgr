@@ -96,6 +96,6 @@ pub fn resolve_status_file_conflict() {
 
     fs::rename(DPKG_USER_STATUS_TMP, DPKG_USER_STATUS).unwrap();
 
-    println!("Package status update completed");
+    log_info!("Package status update completed");
 
 }
