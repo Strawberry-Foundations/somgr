@@ -1237,6 +1237,7 @@ dependencies = [
  "lazy_static",
  "libc",
  "nix",
+ "regex",
  "reqwest",
  "serde",
  "serde_json",
