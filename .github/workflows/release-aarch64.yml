@@ -5,8 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: [self-hosted, linux, ARM64]
-
+    runs-on: self-hosted
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
