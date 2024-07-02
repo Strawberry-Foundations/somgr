@@ -11,3 +11,10 @@ macro_rules! log_fail {
         println!("\x1b[1m\x1b[41m   FAIL   \x1b[0m  {}\x1b[0m", $string);
     };
 }
+
+#[macro_export]
+macro_rules! log_warn {
+    ($string:expr) => {
+        println!("\x1b[1m\x1b[43m   WARN   \x1b[0m  {}\x1b[0m", $string);
+    };
+}
