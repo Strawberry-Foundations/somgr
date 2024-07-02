@@ -8,7 +8,7 @@ use crate::util::verification::{os_verifier, root_verifier};
 use crate::util::dpkg::{get_package_version, update_version_in_entry};
 use crate::statics::{DPKG_SYSTEM_STATUS, DPKG_USER_STATUS, DPKG_USER_STATUS_TMP};
 use crate::args::OPTIONS;
-use crate::log_info;
+use crate::{log_info, log_warn};
 
 pub fn update() {
     os_verifier();
@@ -37,6 +37,11 @@ pub fn update() {
 }
 
 pub fn resolve_status_file_conflict() {
+    if fs::metadata(DPKG_USER_STATUS).is_err() {
+        log_warn!("Package status file does not exist. Aborting...");
+        std::process::exit(0);
+    }
+
     fs::copy(DPKG_USER_STATUS, format!("{}.bak", DPKG_USER_STATUS)).unwrap();
 
     let user_packages: HashSet<String> = {
