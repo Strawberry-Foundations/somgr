@@ -39,7 +39,7 @@ pub fn update() {
 pub fn resolve_status_file_conflict() {
     if fs::metadata(DPKG_USER_STATUS).is_err() {
         log_warn!("Package status file does not exist. Aborting...");
-        std::process::exit(0);
+        return;
     }
 
     fs::copy(DPKG_USER_STATUS, format!("{}.bak", DPKG_USER_STATUS)).unwrap();
