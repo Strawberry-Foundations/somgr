@@ -33,5 +33,5 @@ jobs:
           token: "${{ secrets.GITHUB_TOKEN }}"
           tag_name: "latest"
           prerelease: false
-          name: "Continuous Build"
+          name: "Latest Build"
           files: target/release/somgr
