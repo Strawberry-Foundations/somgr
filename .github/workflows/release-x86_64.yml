@@ -21,12 +21,12 @@ jobs:
         run: sudo apt-get install pkg-config libssl-dev
 
       - name: Build the binary
-        run: cargo build --release
+        run: cargo build --release && mv target/release/somgr target/release/somgr-x86_64
 
       - uses: actions/upload-artifact@v4
         with:
           name: somgr
-          path: target/release/somgr
+          path: target/release/somgr-x86_64
 
       - uses: softprops/action-gh-release@v2
         with:
@@ -34,4 +34,4 @@ jobs:
           tag_name: "latest"
           prerelease: false
           name: "Latest Build"
-          files: target/release/somgr
+          files: target/release/somgr-x86_64
