@@ -8,4 +8,4 @@ pub mod unlock;
 pub mod reboot;
 pub mod backup;
 pub mod login;
-mod run;
+pub mod run;
