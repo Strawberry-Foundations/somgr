@@ -1,18 +1,10 @@
 use crate::log_info;
-use crate::util::fs;
 use crate::util::verification::os_verifier;
 
-pub fn run() {
+pub fn run(args: &[String]) {
     os_verifier();
-
-    log_info!("Mounting file systems ...");
-    fs::mount_system();
-
-    log_info!("Entering chroot ...");
-    subprocess::Exec::shell("sh -c '/usr/sbin/chroot /system'").popen().unwrap();
-
-    log_info!("Unmounting file systems ...");
-    fs::umount_system();
-
-    log_info!("Leaving chroot ...");
+    let command = args.get(1..).unwrap().join(" ");
+    
+    log_info!(format!("Executing command '{command}'"));
+    subprocess::Exec::shell(format!("/usr/sbin/chroot /system {command}")).popen().unwrap();
 }
