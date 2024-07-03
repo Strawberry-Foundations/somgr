@@ -9,6 +9,7 @@ pub fn help() {
     {CYAN}{BOLD}help:{C_RESET} Prints this message
     {CYAN}{BOLD}about:{C_RESET} About StrawberryOS Manager
     {CYAN}{BOLD}shell:{C_RESET} Opens a new system shell
+    {CYAN}{BOLD}run:{C_RESET} Execute a command in the system shell
     {CYAN}{BOLD}login:{C_RESET} Login to your Strawberry ID to enable StrawberryOS Backups
     {CYAN}{BOLD}lock:{C_RESET} Lock apt package update for userspace
     {CYAN}{BOLD}unlock:{C_RESET} Unlock apt package update for userspace
