@@ -10,6 +10,7 @@ pub mod utilities;
 async fn main() -> eyre::Result<()> {
     match ARGS.command {
         Command::Shell => commands::shell::shell(),
+        Command::Run => commands::shell::shell(),
         Command::Mount => commands::mount::mount(),
         Command::Umount => commands::mount::umount(),
         Command::Remount => commands::mount::remount(&OPTIONS.mount_type),
