@@ -1,6 +1,6 @@
 use crate::log_info;
 use crate::util::fs::{mount_system, umount_system};
-use crate::util::verification::{os_verifier, root_verifier};
+use crate::util::verification::os_verifier;
 
 #[derive(Default)]
 pub enum MountType {
@@ -11,7 +11,7 @@ pub enum MountType {
 
 pub fn remount(mount_type: &MountType) {
     os_verifier();
-    root_verifier();
+    karen::escalate_if_needed().unwrap();
     
     match mount_type {
         MountType::ReadWrite => {
@@ -27,7 +27,7 @@ pub fn remount(mount_type: &MountType) {
 
 pub fn mount() {
     os_verifier();
-    root_verifier();
+    karen::escalate_if_needed().unwrap();
     
     log_info!("Binding /dev, /sys and /proc to /system ...");
     mount_system()
@@ -35,7 +35,7 @@ pub fn mount() {
 
 pub fn umount() {
     os_verifier();
-    root_verifier();
+    karen::escalate_if_needed().unwrap();
     
     log_info!("Unmounting system bindings in /system ...");
     umount_system()
