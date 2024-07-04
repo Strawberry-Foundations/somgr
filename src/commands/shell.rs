@@ -4,6 +4,7 @@ use crate::util::verification::os_verifier;
 
 pub fn shell() {
     os_verifier();
+    karen::escalate_if_needed().unwrap();
     
     log_info!("Mounting file systems ...");
     fs::mount_system();
