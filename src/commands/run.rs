@@ -3,6 +3,8 @@ use crate::util::verification::os_verifier;
 
 pub fn run(args: &[String]) {
     os_verifier();
+    karen::escalate_if_needed().unwrap();
+    
     let command = args.get(1..).unwrap().join(" ");
     
     log_info!(format!("Executing command '{command}'"));
