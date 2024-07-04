@@ -2,11 +2,11 @@ use subprocess::NullFile;
 
 use crate::{log_fail, log_info};
 use crate::util::dpkg;
-use crate::util::verification::{os_verifier, root_verifier};
+use crate::util::verification::os_verifier;
 
 pub fn lock() {
     os_verifier();
-    root_verifier();
+    karen::escalate_if_needed().unwrap();
     
     log_info!("Locking apt ...");
 
