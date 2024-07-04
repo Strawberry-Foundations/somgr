@@ -2,10 +2,9 @@ use std::io::Write;
 use std::process::Command;
 
 use crate::{log_fail, log_info};
-use crate::util::verification::root_verifier;
 
 pub fn reboot() {
-    root_verifier();
+    karen::escalate_if_needed().unwrap();
 
     log_info!("Rebooting system");
 
@@ -25,7 +24,7 @@ pub fn reboot() {
 }
 
 pub fn reboot_fw() {
-    root_verifier();
+    karen::escalate_if_needed().unwrap();
 
     let output = Command::new("efibootmgr")
         .arg("--bootnext")
