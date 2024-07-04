@@ -1121,7 +1121,6 @@ dependencies = [
  "stblib",
  "subprocess",
  "tokio",
- "tokio-util",
 ]
 
 [[package]]
