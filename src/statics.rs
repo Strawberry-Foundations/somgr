@@ -3,8 +3,8 @@ use lazy_static::lazy_static;
 use stblib::logging::Logger;
 use stblib::colors::{BLUE, BOLD, C_RESET, CYAN, GREEN, RED, YELLOW};
 
-pub const STRAWBERRY_ID_API: &str = "https://id.strawberryfoundations.xyz/v2/";
-pub const STRAWBERRY_CLOUD_API: &str = "https://cloud.strawberryfoundations.xyz/";
+pub const STRAWBERRY_ID_API: &str = "https://id.strawberryfoundations.org/v2/";
+pub const STRAWBERRY_CLOUD_API: &str = "https://cloud.strawberryfoundations.org/";
 // pub const STRAWBERRY_CLOUD_API: &str = "http://localhost:8000/";
 
 pub const DPKG_SYSTEM_STATUS: &str = "/system/var/lib/dpkg/status";
