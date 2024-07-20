@@ -31,13 +31,13 @@ pub fn update() {
 
     lock();
 
-    log_ok!("Syncing file systems ...");
+    log_info!("Syncing file systems ...");
     subprocess::Exec::shell("sync").popen().unwrap();
 
     umount();
     remount(&MountType::ReadOnly);
 
-    log_info!("Finished os update ...");
+    log_ok!("Finished os update ...");
 }
 
 pub fn resolve_status_file_conflict() {
