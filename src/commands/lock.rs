@@ -1,6 +1,6 @@
 use subprocess::NullFile;
 
-use crate::{log_fail, log_info};
+use crate::{log_fail, log_info, log_ok};
 use crate::util::dpkg;
 use crate::util::verification::os_verifier;
 
@@ -19,7 +19,7 @@ pub fn lock() {
         .expect("Failed to execute command");
 
     if exit_status.success() {
-        log_info!("Finished apt locking");
+        log_ok!("Finished apt locking");
     } else {
         log_fail!("Command execution failed");
     }
