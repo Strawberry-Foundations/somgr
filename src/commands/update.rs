@@ -30,8 +30,9 @@ pub fn update() {
     resolve_status_file_conflict();
 
     lock();
-    remount(&MountType::ReadOnly);
+    
     umount();
+    remount(&MountType::ReadOnly);
 
     log_info!("Finished os update ...");
 }
