@@ -2,8 +2,11 @@ use std::io::Write;
 use std::process::Command;
 
 use crate::{log_fail, log_info};
+use crate::util::verification::is_chroot;
+
 
 pub fn reboot() {
+    is_chroot();
     karen::escalate_if_needed().unwrap();
 
     log_info!("Rebooting system");
@@ -24,6 +27,7 @@ pub fn reboot() {
 }
 
 pub fn reboot_fw() {
+    is_chroot();
     karen::escalate_if_needed().unwrap();
 
     let output = Command::new("efibootmgr")
