@@ -38,6 +38,9 @@ pub fn help() {
         {CYAN}{BOLD}remove {C_RESET}  Remove files from backup
         {CYAN}{BOLD}list   {C_RESET}  Show backups & files
         {CYAN}{BOLD}status {C_RESET}  Show usage of your cloud data
+
+{MAGENTA}{BOLD}Options:{C_RESET}
+    {CYAN}{BOLD}-v, --verbose:{C_RESET} Enable verbose output, useful for debugging
 ", *VERSION);
     std::process::exit(0);
 }
