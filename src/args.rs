@@ -38,6 +38,7 @@ pub struct Options {
     pub mount_type: MountType,
     pub yes: bool,
     pub fw: bool,
+    pub verbose: bool,
 }
 
 impl Args {
@@ -97,6 +98,7 @@ impl Args {
                 "-rw" | "--readwrite" => options.mount_type = MountType::ReadWrite,
                 "-y" | "--yes" => options.yes = true,
                 "-fw" | "--firmware" => options.fw = true,
+                "-v" | "--verbose" => options.verbose = true,
 
                 _ => {}
             }
