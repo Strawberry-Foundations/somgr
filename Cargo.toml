@@ -1,6 +1,6 @@
 [package]
 name = "somgr"
-version = "0.2.7"
+version = "0.2.8"
 edition = "2021"
 description = "somgr is the management tool for StrawberryOS to update, configure or manage your operating system"
 
