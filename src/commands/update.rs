@@ -1,6 +1,8 @@
 use std::collections::HashSet;
+use std::fmt::Error;
 use std::fs::{self, File};
 use std::io::{BufRead, BufReader, Read, Write};
+use eyre::{eyre, Report};
 
 use crate::commands::lock::lock;
 use crate::commands::mount::{mount, umount, remount, MountType};
@@ -27,7 +29,11 @@ pub fn update() {
     }
 
     log_info!("The system searches for package conflicts between system (/system) and userspace (/user)...");
-    resolve_status_file_conflict();
+
+    if resolve_status_file_conflict().is_err() {
+        log_warn!("Cancelling update");
+        std::process::exit(0)
+    };
 
     lock();
 
@@ -40,10 +46,10 @@ pub fn update() {
     log_ok!("Finished os update ...");
 }
 
-pub fn resolve_status_file_conflict() {
+pub fn resolve_status_file_conflict() -> eyre::Result<()> {
     if fs::metadata(DPKG_USER_STATUS).is_err() {
         log_warn!("Package status file does not exist. Aborting...");
-        return;
+        return Err(eyre!("Package status file does not exist"));
     }
 
     fs::copy(DPKG_USER_STATUS, format!("{}.bak", DPKG_USER_STATUS)).unwrap();
@@ -106,5 +112,5 @@ pub fn resolve_status_file_conflict() {
     fs::rename(DPKG_USER_STATUS_TMP, DPKG_USER_STATUS).unwrap();
 
     log_info!("Package status update completed");
-
+    Ok(())
 }
