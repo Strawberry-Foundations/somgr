@@ -8,10 +8,11 @@ use serde::{Deserialize, Serialize};
 use stblib::colors::{BOLD, C_RESET, CYAN, GREEN, RED, UNDERLINE, YELLOW};
 
 use crate::core::args::ARGS;
-use crate::util::fmt::format_size;
+use crate::util::fmt::{format_size, calc_percent};
+use crate::util::path::make_absolute_path;
 use crate::commands;
 use crate::commands::login::Credentials;
-use crate::utilities::{calc_percent, make_absolute_path, serializer};
+use crate::utilities::{, serializer};
 use crate::statics::STRAWBERRY_CLOUD_API;
 
 
