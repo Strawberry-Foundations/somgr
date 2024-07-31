@@ -7,7 +7,7 @@ use indicatif::{ProgressBar, ProgressStyle};
 use serde::{Deserialize, Serialize};
 use stblib::colors::{BOLD, C_RESET, CYAN, GREEN, RED, UNDERLINE, YELLOW};
 
-use crate::args::ARGS;
+use crate::core::args::ARGS;
 use crate::commands;
 use crate::commands::login::Credentials;
 use crate::utilities::{calc_percent, format_size, make_absolute_path, serializer};
