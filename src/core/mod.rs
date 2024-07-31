@@ -1,2 +1,2 @@
-pub mod dpkg;
 pub mod subprocess;
+pub mod dpkg;
