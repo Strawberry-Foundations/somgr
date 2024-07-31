@@ -12,7 +12,7 @@ use crate::util::fmt::{format_size, calc_percent};
 use crate::util::path::make_absolute_path;
 use crate::commands;
 use crate::commands::login::Credentials;
-use crate::utilities::{, serializer};
+use crate::utilities::{serializer};
 use crate::statics::STRAWBERRY_CLOUD_API;
 
 
