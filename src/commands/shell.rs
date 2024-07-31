@@ -1,5 +1,5 @@
 use crate::core::subprocess::popen;
-use crate::util::fs;
+use crate::core::fs;
 use crate::util::verification::os_verifier;
 use crate::log_info;
 
