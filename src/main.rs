@@ -1,6 +1,5 @@
-use crate::args::{ARGS, Command, OPTIONS};
+use core::args::{ARGS, Command, OPTIONS};
 
-pub mod args;
 pub mod commands;
 pub mod statics;
 pub mod util;
