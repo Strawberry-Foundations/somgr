@@ -1,5 +1,6 @@
-use crate::log_info;
+use crate::core::subprocess::popen;
 use crate::util::verification::os_verifier;
+use crate::log_info;
 
 pub fn run(args: &[String]) {
     os_verifier();
@@ -8,5 +9,5 @@ pub fn run(args: &[String]) {
     let command = args.get(1..).unwrap().join(" ");
     
     log_info!(format!("Executing command '{command}'"));
-    subprocess::Exec::shell(format!("/usr/sbin/chroot /system {command}")).popen().unwrap();
+    popen(format!("/usr/sbin/chroot /system {command}"));
 }
