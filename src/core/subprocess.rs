@@ -1,6 +1,6 @@
 use subprocess::{NullFile, Popen};
 
-use crate::args::OPTIONS;
+use crate::core::args::OPTIONS;
 use crate::log_panic;
 
 pub fn subprocess(cmd: impl ToString) -> subprocess::ExitStatus {
