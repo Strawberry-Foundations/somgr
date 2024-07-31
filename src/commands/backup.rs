@@ -10,9 +10,9 @@ use stblib::colors::{BOLD, C_RESET, CYAN, GREEN, RED, UNDERLINE, YELLOW};
 use crate::core::args::ARGS;
 use crate::util::fmt::{format_size, calc_percent};
 use crate::util::path::make_absolute_path;
+use crate::util::serde::serializer;
 use crate::commands;
 use crate::commands::login::Credentials;
-use crate::utilities::{serializer};
 use crate::statics::STRAWBERRY_CLOUD_API;
 
 
