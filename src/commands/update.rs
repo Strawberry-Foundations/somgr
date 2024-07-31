@@ -10,6 +10,7 @@ use crate::core::dpkg::{get_package_version, update_version_in_entry};
 use crate::statics::{DPKG_SYSTEM_STATUS, DPKG_USER_STATUS, DPKG_USER_STATUS_TMP};
 use crate::core::args::OPTIONS;
 use crate::{log_info, log_ok, log_warn};
+use crate::core::fs::fadvise;
 
 pub fn update() {
     os_verifier();
@@ -112,6 +113,8 @@ pub fn resolve_status_file_conflict() -> eyre::Result<()> {
     }
 
     fs::rename(DPKG_USER_STATUS_TMP, DPKG_USER_STATUS).unwrap();
+
+    fadvise("/var/lib/dpkg/status");
 
     log_info!("Package status update completed");
     Ok(())
