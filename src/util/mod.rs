@@ -1,2 +1,2 @@
 pub mod verification;
-mod fmt;
+pub mod fmt;
