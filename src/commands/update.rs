@@ -8,6 +8,7 @@ use crate::commands::mount::{mount, umount, remount, MountType};
 use crate::util::verification::os_verifier;
 use crate::core::dpkg::{get_package_version, update_version_in_entry};
 use crate::core::args::OPTIONS;
+use crate::core::fs::drop_fs_cache;
 use crate::statics::{DPKG_SYSTEM_STATUS, DPKG_USER_STATUS, DPKG_USER_STATUS_TMP};
 use crate::{log_info, log_ok, log_warn};
 
@@ -33,6 +34,8 @@ pub fn update() {
         log_warn!("Cancelling update. Please install any package in userspace before updating your system");
         std::process::exit(0)
     };
+
+    drop_fs_cache();
 
     lock();
 
