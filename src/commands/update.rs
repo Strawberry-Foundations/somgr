@@ -46,13 +46,16 @@ pub fn update() {
 }
 
 pub fn resolve_status_file_conflict() -> eyre::Result<()> {
+    // check if dpkg userspace file exists
     if fs::metadata(DPKG_USER_STATUS).is_err() {
         log_warn!("Package status file does not exist. Aborting...");
         return Err(eyre!("Package status file does not exist"));
     }
 
+    // backup original userspace status file
     fs::copy(DPKG_USER_STATUS, format!("{}.bak", DPKG_USER_STATUS)).unwrap();
 
+    // get all installed packages
     let user_packages: HashSet<String> = {
         let file = File::open(DPKG_USER_STATUS).unwrap();
         let reader = BufReader::new(file);
@@ -64,10 +67,10 @@ pub fn resolve_status_file_conflict() -> eyre::Result<()> {
     };
 
     let mut package_entry = String::new();
-    let mut infile = BufReader::new(File::open(DPKG_USER_STATUS).unwrap());
-    let mut outfile = File::create(DPKG_USER_STATUS_TMP).unwrap();
+    let mut statusfile = BufReader::new(File::open(DPKG_USER_STATUS).unwrap());
+    let mut statusfile_temp = File::create(DPKG_USER_STATUS_TMP).unwrap();
 
-    for line in infile.by_ref().lines() {
+    for line in statusfile.by_ref().lines() {
         let line = line.unwrap();
         if line.trim().is_empty() {
             if let Some(package_name) = package_entry.lines().find_map(|line| {
@@ -85,16 +88,16 @@ pub fn resolve_status_file_conflict() -> eyre::Result<()> {
                         if system_version != user_version {
                             log_info!(format!("Update {} from version {} to {}", package_name, user_version, system_version));
                             let updated_entry = update_version_in_entry(&package_entry, &system_version);
-                            writeln!(outfile, "{}\n", updated_entry).unwrap();
+                            writeln!(statusfile_temp, "{}\n", updated_entry).unwrap();
 
                         } else {
-                            writeln!(outfile, "{}\n", package_entry).unwrap();
+                            writeln!(statusfile_temp, "{}\n", package_entry).unwrap();
                         }
                     } else {
-                        writeln!(outfile, "{}\n", package_entry).unwrap();
+                        writeln!(statusfile_temp, "{}\n", package_entry).unwrap();
                     }
                 } else {
-                    writeln!(outfile, "{}\n", package_entry).unwrap();
+                    writeln!(statusfile_temp, "{}\n", package_entry).unwrap();
                 }
             }
             package_entry.clear();
@@ -105,7 +108,7 @@ pub fn resolve_status_file_conflict() -> eyre::Result<()> {
     }
 
     if !package_entry.is_empty() {
-        writeln!(outfile, "{}\n", package_entry).unwrap();
+        writeln!(statusfile_temp, "{}\n", package_entry).unwrap();
     }
 
     fs::rename(DPKG_USER_STATUS_TMP, DPKG_USER_STATUS).unwrap();
