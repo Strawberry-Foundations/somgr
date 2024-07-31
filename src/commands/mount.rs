@@ -1,5 +1,5 @@
 use crate::log_info;
-use crate::util::fs::{mount_system, umount_system};
+use crate::core::fs::{mount_system, umount_system};
 use crate::util::verification::os_verifier;
 
 #[derive(Default)]
