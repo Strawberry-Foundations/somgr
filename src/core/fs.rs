@@ -13,5 +13,6 @@ pub fn umount_system() {
 }
 
 pub fn drop_fs_cache() {
+    popen("sync");
     popen("echo 2 > /proc/sys/vm/drop_caches");
 }
