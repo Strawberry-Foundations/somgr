@@ -1,23 +1,6 @@
 use std::path::{Path, PathBuf};
 
-pub fn format_size(kilobytes: i64) -> String {
-    const KB: i64 = 1024;
-    const MB: i64 = 1024 * KB;
 
-    if kilobytes < 0 {
-        return String::from("0 kB")
-    }
-
-    let bytes = kilobytes * KB;
-
-    if bytes < KB {
-        format!("{} B", bytes)
-    } else if bytes < MB {
-        format!("{:.1} kB", bytes as f64 / KB as f64)
-    } else {
-        format!("{:.1} MB", bytes as f64 / MB as f64)
-    }
-}
 
 pub fn serializer(text: &str) -> Result<serde_json::Value, serde_json::Error> {
     let serializer = serde_json::from_str(text)?;
