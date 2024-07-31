@@ -9,7 +9,7 @@ use crate::commands::mount::{mount, umount, remount, MountType};
 use crate::util::verification::os_verifier;
 use crate::core::dpkg::{get_package_version, update_version_in_entry};
 use crate::statics::{DPKG_SYSTEM_STATUS, DPKG_USER_STATUS, DPKG_USER_STATUS_TMP};
-use crate::args::OPTIONS;
+use crate::core::args::OPTIONS;
 use crate::{log_info, log_ok, log_warn};
 
 pub fn update() {
