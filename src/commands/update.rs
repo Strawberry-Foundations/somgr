@@ -30,7 +30,7 @@ pub fn update() {
     log_info!("The system searches for package conflicts between system (/system) and userspace (/user)...");
 
     if resolve_status_file_conflict().is_err() {
-        log_warn!("Cancelling update");
+        log_warn!("Cancelling update. Please install any package in userspace before updating your system");
         std::process::exit(0)
     };
 
