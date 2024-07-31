@@ -1,5 +1,3 @@
-extern crate nix;
-
 use core::args::{ARGS, Command, OPTIONS};
 
 pub mod commands;
