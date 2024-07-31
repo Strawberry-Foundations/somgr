@@ -1,8 +1,7 @@
 use std::collections::HashSet;
-use std::fmt::Error;
 use std::fs::{self, File};
 use std::io::{BufRead, BufReader, Read, Write};
-use eyre::{eyre, Report};
+use eyre::eyre;
 
 use crate::commands::lock::lock;
 use crate::commands::mount::{mount, umount, remount, MountType};
