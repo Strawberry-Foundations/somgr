@@ -5,6 +5,7 @@ pub mod commands;
 pub mod statics;
 pub mod util;
 pub mod utilities;
+pub mod core;
 
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
