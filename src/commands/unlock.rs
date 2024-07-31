@@ -1,5 +1,5 @@
 use crate::core::subprocess::subprocess;
-use crate::util::dpkg;
+use crate::core::dpkg;
 use crate::util::verification::os_verifier;
 use crate::{log_info, log_ok, log_panic};
 
