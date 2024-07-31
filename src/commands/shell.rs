@@ -1,6 +1,7 @@
-use crate::log_info;
+use crate::core::subprocess::popen;
 use crate::util::fs;
 use crate::util::verification::os_verifier;
+use crate::log_info;
 
 pub fn shell() {
     os_verifier();
@@ -10,7 +11,7 @@ pub fn shell() {
     fs::mount_system();
     
     log_info!("Entering chroot ...");
-    subprocess::Exec::shell("sh -c '/usr/sbin/chroot /system'").popen().unwrap();
+    popen("sh -c '/usr/sbin/chroot /system'");
 
     log_info!("Unmounting file systems ...");
     fs::umount_system();
