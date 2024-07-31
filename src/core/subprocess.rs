@@ -16,7 +16,6 @@ pub fn subprocess(cmd: impl ToString) -> subprocess::ExitStatus {
     else {
         subprocess::Exec::shell(command)
             .stdout(NullFile)
-            .stderr(NullFile)
             .join()
             .unwrap_or_else(|_| {
                 log_panic!("Failed to execute command");
