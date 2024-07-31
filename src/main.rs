@@ -3,7 +3,6 @@ use core::args::{ARGS, Command, OPTIONS};
 pub mod commands;
 pub mod statics;
 pub mod util;
-pub mod utilities;
 pub mod core;
 
 #[tokio::main]
