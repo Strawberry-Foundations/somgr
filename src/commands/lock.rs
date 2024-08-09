@@ -1,5 +1,5 @@
 use crate::core::subprocess::subprocess;
-use crate::core::dpkg;
+use crate::core::dpkg::status;
 use crate::util::verification::os_verifier;
 use crate::{log_info, log_ok, log_panic};
 
@@ -9,7 +9,7 @@ pub fn lock() {
     
     log_info!("Locking apt ...");
 
-    let packages = dpkg::get_packages();
+    let packages = status::get_packages();
 
     let exit_status = subprocess(format!("apt-mark hold {}", packages.join(" ")));
 
