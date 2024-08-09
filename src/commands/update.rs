@@ -29,7 +29,7 @@ pub fn update() {
         subprocess::Exec::shell("/usr/sbin/chroot /system sh -c 'apt update && apt upgrade'").popen().unwrap();
     }
 
-    log_info!("The system searches for package conflicts between system (/system) and userspace (/user)...");
+    log_info!("The system searches for package conflicts between system (/system) and userspace (/user) ...");
 
     if resolve_status_file_conflict().is_err() {
         log_warn!("Cancelling update. Please install any package in userspace before updating your system");
@@ -52,7 +52,7 @@ pub fn update() {
 pub fn resolve_status_file_conflict() -> eyre::Result<()> {
     // Check if dpkg userspace file exists
     if fs::metadata(DPKG_USER_STATUS).is_err() {
-        log_warn!("Package status file does not exist. Aborting...");
+        log_warn!("Package status file does not exist. Aborting ...");
         return Err(eyre!("Package status file does not exist"));
     }
 
@@ -112,7 +112,7 @@ pub fn resolve_status_file_conflict() -> eyre::Result<()> {
             .collect()
     };
 
-    log_info!("Checking for new packages");
+    log_info!("Checking for new packages ...");
 
     // Add missing packages from the system status file to the user status file
     for package_name in _system_packages.difference(&_user_packages) {
