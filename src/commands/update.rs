@@ -125,6 +125,6 @@ pub fn resolve_status_file_conflict() -> eyre::Result<()> {
         }
     }
 
-    log_info!("Package status update completed");
+    log_ok!("Package status update completed");
     Ok(())
 }
