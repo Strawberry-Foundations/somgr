@@ -1,6 +1,6 @@
 use std::collections::HashMap;
-use std::fs::{File, OpenOptions};
-use std::io::{self, BufRead, BufReader, BufWriter, Write};
+use std::fs::File;
+use std::io::{self, BufRead, BufReader, Read, Write};
 use std::path::Path;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -30,6 +30,7 @@ pub struct DebPackage {
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct DpkgStatus {
+    pub str: String,
     pub packages: Vec<DebPackage>,
 }
 
@@ -210,6 +211,7 @@ impl Default for DpkgStatus {
 impl DpkgStatus {
     pub fn new() -> Self {
         Self {
+            str: String::new(),
             packages: Vec::new(),
         }
     }
@@ -224,8 +226,12 @@ impl DpkgStatus {
     }
 
     pub fn from_status_file<P: AsRef<Path>>(filename: P) -> Self {
-        let file = File::open(filename).unwrap();
+        let file = File::open(&filename).unwrap();
         let reader = BufReader::new(file);
+        let mut status_str = String::new();
+
+        let mut file = File::open(&filename).unwrap();
+        file.read_to_string(&mut status_str).unwrap();
 
         let mut package_str = String::new();
         let mut packages = Vec::new();
@@ -250,6 +256,7 @@ impl DpkgStatus {
         }
 
         Self {
+            str: status_str,
             packages,
         }
     }
@@ -293,23 +300,13 @@ impl DpkgStatus {
         self.packages.iter().any(|pkg| pkg.package.as_deref() == Some(name))
     }
 
-    pub fn update_package(&mut self, package_name: &str, updated_package: &DebPackage) {
-        if let Some(pkg) = self.packages.iter_mut().find(|pkg| pkg.package.as_deref() == Some(package_name)) {
-            *pkg = updated_package.to_owned();
-        }
-    }
-
-    pub fn update_package_str(&mut self, old_str: &str, new_str: &str) {
-
+    pub fn update_status(&mut self, old_str: &String, new_str: &str) {
+        self.str = self.str.replace(old_str, new_str);
     }
 
     pub fn write_status_file<P: AsRef<Path>>(&self, filename: P) -> io::Result<()> {
-        let file = OpenOptions::new().write(true).truncate(true).open(filename)?;
-        let mut writer = BufWriter::new(file);
-
-        for package in &self.packages {
-            writer.write_all(package.to_status_str().as_bytes())?;
-        }
+        let mut file = File::create(filename)?;
+        file.write_all(self.str.as_ref())?;
 
         Ok(())
     }
