@@ -303,6 +303,10 @@ impl DpkgStatus {
     pub fn update_status(&mut self, old_str: &String, new_str: &str) {
         self.str = self.str.replace(old_str, new_str);
     }
+    
+    pub fn add(&mut self, new_entry: &str) {
+        self.str.push_str(format!("{new_entry}\n").as_str());
+    }
 
     pub fn write_status_file<P: AsRef<Path>>(&self, filename: P) -> io::Result<()> {
         let mut file = File::create(filename)?;
