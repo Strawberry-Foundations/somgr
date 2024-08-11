@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 use std::fs::{self, File};
-use std::io::{BufRead, BufReader, Write};
+use std::io::{BufRead, BufReader};
 use eyre::eyre;
 
 use crate::commands::lock::lock;
@@ -9,7 +9,7 @@ use crate::util::verification::os_verifier;
 use crate::core::dpkg::status::{get_package_version, get_package_entry};
 use crate::core::args::OPTIONS;
 use crate::core::fs::drop_fs_cache;
-use crate::statics::{DPKG_SYSTEM_STATUS, DPKG_USER_STATUS, DPKG_USER_STATUS_TMP};
+use crate::statics::{DPKG_SYSTEM_STATUS, DPKG_USER_STATUS};
 use crate::{log_info, log_ok, log_warn};
 use crate::core::dpkg::serde::DpkgStatus;
 
@@ -112,16 +112,15 @@ pub fn resolve_status_file_conflict() -> eyre::Result<()> {
 
     log_info!("Checking for new packages ...");
 
-    let mut user_statusfile = File::create("/var/lib/dpkg/status").unwrap();
-
     // Add missing packages from the system status file to the user status file
     for package_name in _system_packages.difference(&_user_packages) {
         let package_entry = get_package_entry(package_name, DPKG_SYSTEM_STATUS);
         let version = get_package_version(package_name, DPKG_SYSTEM_STATUS);
 
-        if let (Some(entry), Some(version)) = (package_entry, version) {
+        if let (Some(mut entry), Some(version)) = (package_entry, version) {
             log_info!(format!("Add {package_name} version {version}"));
-            writeln!(user_statusfile, "{}\n", entry).unwrap();
+            user_packages.add(entry.as_mut_str());
+            user_packages.write_status_file("/var/lib/dpkg/status")?;
         }
     }
 
