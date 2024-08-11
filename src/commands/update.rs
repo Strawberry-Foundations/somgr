@@ -62,7 +62,7 @@ pub fn resolve_status_file_conflict() -> eyre::Result<()> {
     let mut user_packages = DpkgStatus::from_status_file("/var/lib/dpkg/status");
     let system_packages = DpkgStatus::from_status_file(DPKG_SYSTEM_STATUS);
 
-    let mut user_statusfile_tmp = File::create(DPKG_USER_STATUS_TMP).unwrap();
+    let mut user_statusfile = File::open("/var/lib/dpkg/status").unwrap();
 
     for package in user_packages.clone().packages {
         let package_name = package.package.clone();
@@ -121,7 +121,7 @@ pub fn resolve_status_file_conflict() -> eyre::Result<()> {
 
         if let (Some(entry), Some(version)) = (package_entry, version) {
             log_info!(format!("Add {package_name} version {version}"));
-            writeln!(user_statusfile_tmp, "{}\n", entry).unwrap();
+            writeln!(user_statusfile, "{}\n", entry).unwrap();
         }
     }
 
