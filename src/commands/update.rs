@@ -62,8 +62,6 @@ pub fn resolve_status_file_conflict() -> eyre::Result<()> {
     let mut user_packages = DpkgStatus::from_status_file("/var/lib/dpkg/status");
     let system_packages = DpkgStatus::from_status_file(DPKG_SYSTEM_STATUS);
 
-    let mut user_statusfile = File::create("/var/lib/dpkg/status").unwrap();
-
     for package in user_packages.clone().packages {
         let package_name = package.package.clone();
         let system_package = system_packages.search_package(package_name.unwrap().as_str());
@@ -113,6 +111,8 @@ pub fn resolve_status_file_conflict() -> eyre::Result<()> {
     };
 
     log_info!("Checking for new packages ...");
+
+    let mut user_statusfile = File::create("/var/lib/dpkg/status").unwrap();
 
     // Add missing packages from the system status file to the user status file
     for package_name in _system_packages.difference(&_user_packages) {
