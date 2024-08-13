@@ -3,15 +3,14 @@ use std::fs::{self, File};
 use std::io::{BufRead, BufReader};
 use eyre::eyre;
 
+use crate::{log_info, log_ok, log_warn};
+use crate::core::dpkg::status::{get_package_version, get_package_entry};
+use crate::core::args::OPTIONS;
+use crate::core::dpkg::serde::DpkgStatus;
 use crate::commands::lock::lock;
 use crate::commands::mount::{mount, umount, remount, MountType};
 use crate::util::verification::os_verifier;
-use crate::core::dpkg::status::{get_package_version, get_package_entry};
-use crate::core::args::OPTIONS;
-use crate::core::fs::drop_fs_cache;
 use crate::statics::{DPKG_SYSTEM_STATUS, DPKG_USER_STATUS};
-use crate::{log_info, log_ok, log_warn};
-use crate::core::dpkg::serde::DpkgStatus;
 
 pub fn update() {
     os_verifier();
@@ -35,9 +34,7 @@ pub fn update() {
         log_warn!("Cancelling update. Please install any package in userspace before updating your system");
         std::process::exit(0)
     };
-
-    drop_fs_cache();
-
+    
     lock();
 
     log_info!("Syncing file systems ...");
