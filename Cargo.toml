@@ -24,6 +24,7 @@ serde_yaml = "0.9.34"
 
 tokio = { version = "1.39.2", features = ["macros", "rt-multi-thread"] }
 reqwest = "0.12.5"
+nix = { version = "0.29.0", features = ["mount"] }
 
 [profile.release]
 opt-level = 'z'
